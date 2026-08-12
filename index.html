@@ -236,7 +236,6 @@
 
     </header>
 
-
     <!-- TELA INICIAL -->
 
     <section id="home" class="screen active">
@@ -259,11 +258,7 @@
                 inteligente que acompanha sua evolução.
             </p>
 
-            <button
-                type="button"
-                class="button"
-                onclick="mostrarNivel()"
-            >
+            <button class="button" onclick="mostrarNivel()">
                 Começar minha jornada →
             </button>
 
@@ -271,18 +266,13 @@
 
     </section>
 
-
     <!-- TELA DE NÍVEL -->
 
     <section id="nivel" class="screen">
 
         <div class="level-container">
 
-            <button
-                type="button"
-                class="back"
-                onclick="voltarInicio()"
-            >
+            <button class="back" onclick="voltarInicio()">
                 ← Voltar
             </button>
 
@@ -297,11 +287,7 @@
 
             <div class="levels">
 
-                <button
-                    type="button"
-                    class="level-card"
-                    onclick="selecionarNivel(this)"
-                >
+                <button class="level-card" onclick="selecionarNivel(this)">
 
                     <div class="level-icon">🌱</div>
 
@@ -315,12 +301,7 @@
 
                 </button>
 
-
-                <button
-                    type="button"
-                    class="level-card"
-                    onclick="selecionarNivel(this)"
-                >
+                <button class="level-card" onclick="selecionarNivel(this)">
 
                     <div class="level-icon">📖</div>
 
@@ -335,12 +316,7 @@
 
                 </button>
 
-
-                <button
-                    type="button"
-                    class="level-card"
-                    onclick="selecionarNivel(this)"
-                >
+                <button class="level-card" onclick="selecionarNivel(this)">
 
                     <div class="level-icon">🔥</div>
 
@@ -357,9 +333,7 @@
 
             </div>
 
-
             <button
-                type="button"
                 id="continueButton"
                 class="button continue"
                 onclick="continuar()"
@@ -371,151 +345,33 @@
 
     </section>
 
-
-    <!-- TELA DE OBJETIVO -->
-
-    <section id="objetivo" class="screen">
-
-        <div class="level-container">
-
-            <button
-                type="button"
-                class="back"
-                onclick="voltarNivel()"
-            >
-                ← Voltar
-            </button>
-
-            <h2 class="level-title">
-                Qual é o seu objetivo?
-            </h2>
-
-            <p class="level-description">
-                Escolha o que você mais deseja alcançar
-                durante sua jornada no BíbliaQuest.
-            </p>
-
-            <div class="levels">
-
-                <button
-                    type="button"
-                    class="level-card objetivo-card"
-                    onclick="selecionarObjetivo(this)"
-                >
-
-                    <div class="level-icon">📖</div>
-
-                    <div class="level-name">
-                        Conhecer melhor a Bíblia
-                    </div>
-
-                    <div class="level-text">
-                        Quero entender as histórias,
-                        personagens e ensinamentos das Escrituras.
-                    </div>
-
-                </button>
-
-
-                <button
-                    type="button"
-                    class="level-card objetivo-card"
-                    onclick="selecionarObjetivo(this)"
-                >
-
-                    <div class="level-icon">🧠</div>
-
-                    <div class="level-name">
-                        Memorizar versículos
-                    </div>
-
-                    <div class="level-text">
-                        Quero guardar a Palavra de Deus
-                        no meu coração.
-                    </div>
-
-                </button>
-
-
-                <button
-                    type="button"
-                    class="level-card objetivo-card"
-                    onclick="selecionarObjetivo(this)"
-                >
-
-                    <div class="level-icon">🔥</div>
-
-                    <div class="level-name">
-                        Fortalecer minha fé
-                    </div>
-
-                    <div class="level-text">
-                        Quero desenvolver uma vida
-                        espiritual mais próxima de Deus.
-                    </div>
-
-                </button>
-
-
-                <button
-                    type="button"
-                    class="level-card objetivo-card"
-                    onclick="selecionarObjetivo(this)"
-                >
-
-                    <div class="level-icon">🏆</div>
-
-                    <div class="level-name">
-                        Testar meus conhecimentos
-                    </div>
-
-                    <div class="level-text">
-                        Quero responder desafios
-                        e provar o quanto conheço a Bíblia.
-                    </div>
-
-                </button>
-
-            </div>
-
-
-            <button
-                type="button"
-                id="objectiveContinue"
-                class="button continue"
-                onclick="continuarObjetivo()"
-            >
-                Continuar →
-            </button>
-
-        </div>
-
-    </section>
-
 </div>
-
 
 <script>
 
     function mostrarNivel() {
-    document.getElementById("home").style.display = "none";
-    document.getElementById("nivel").style.display = "flex";
-}
 
+        document.getElementById("home")
+            .classList.remove("active");
+
+        document.getElementById("nivel")
+            .classList.add("active");
+
+    }
 
     function voltarInicio() {
 
-        document.getElementById("nivel").classList.remove("active");
+        document.getElementById("nivel")
+            .classList.remove("active");
 
-        document.getElementById("home").classList.add("active");
+        document.getElementById("home")
+            .classList.add("active");
 
     }
-
 
     function selecionarNivel(card) {
 
-        document
-            .querySelectorAll("#nivel .level-card")
+        document.querySelectorAll(".level-card")
             .forEach(function(item) {
 
                 item.classList.remove("selected");
@@ -524,76 +380,15 @@
 
         card.classList.add("selected");
 
-        document
-            .getElementById("continueButton")
+        document.getElementById("continueButton")
             .classList.add("ready");
 
     }
-
 
     function continuar() {
 
-        const nivelSelecionado =
-            document.querySelector("#nivel .level-card.selected");
-
-        if (!nivelSelecionado) {
-            return;
-        }
-
-        document
-            .getElementById("nivel")
-            .classList.remove("active");
-
-        document
-            .getElementById("objetivo")
-            .classList.add("active");
-
-    }
-
-
-    function voltarNivel() {
-
-        document
-            .getElementById("objetivo")
-            .classList.remove("active");
-
-        document
-            .getElementById("nivel")
-            .classList.add("active");
-
-    }
-
-
-    function selecionarObjetivo(card) {
-
-        document
-            .querySelectorAll("#objetivo .objetivo-card")
-            .forEach(function(item) {
-
-                item.classList.remove("selected");
-
-            });
-
-        card.classList.add("selected");
-
-        document
-            .getElementById("objectiveContinue")
-            .classList.add("ready");
-
-    }
-
-
-    function continuarObjetivo() {
-
-        const objetivoSelecionado =
-            document.querySelector("#objetivo .objetivo-card.selected");
-
-        if (!objetivoSelecionado) {
-            return;
-        }
-
         alert(
-            "🔥 Excelente! Agora vamos preparar sua jornada no BíbliaQuest."
+            "🎯 Perfeito! Agora vamos criar sua jornada personalizada."
         );
 
     }
