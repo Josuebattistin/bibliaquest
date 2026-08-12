@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>BíbliaQuest</title>
 
     <style>
@@ -15,7 +17,9 @@
         body {
             font-family: Arial, sans-serif;
             min-height: 100vh;
-            background: linear-gradient(135deg, #07111f, #10253a);
+            background:
+                radial-gradient(circle at 80% 20%, rgba(212,175,55,0.12), transparent 30%),
+                linear-gradient(135deg, #07111f, #0d1b2a, #10253a);
             color: white;
         }
 
@@ -55,16 +59,24 @@
         .login {
             color: white;
             text-decoration: none;
+            opacity: 0.8;
+        }
+
+        .screen {
+            min-height: 85vh;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .screen.active {
+            display: flex;
         }
 
         .hero {
-            min-height: 80vh;
-            display: flex;
-            align-items: center;
-        }
-
-        .hero-content {
-            max-width: 650px;
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
         }
 
         .badge {
@@ -79,7 +91,7 @@
         }
 
         h1 {
-            font-size: clamp(45px, 7vw, 76px);
+            font-size: clamp(45px, 7vw, 72px);
             line-height: 1;
             margin-bottom: 25px;
         }
@@ -89,54 +101,121 @@
         }
 
         .subtitle {
-            font-size: 19px;
+            font-size: 18px;
             line-height: 1.7;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255,255,255,0.68);
             margin-bottom: 35px;
         }
 
         .button {
             border: none;
-            padding: 17px 28px;
+            padding: 17px 30px;
             border-radius: 14px;
             background: linear-gradient(135deg, #f3d477, #c69a32);
             color: #101820;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
+            transition: 0.2s;
         }
 
         .button:hover {
             transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(212,175,55,0.25);
         }
 
-        .stats {
-            display: flex;
-            gap: 35px;
-            margin-top: 50px;
+        .level-container {
+            width: 100%;
+            max-width: 720px;
         }
 
-        .stat strong {
-            display: block;
-            font-size: 24px;
+        .back {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.6);
+            cursor: pointer;
+            margin-bottom: 35px;
+            font-size: 14px;
         }
 
-        .stat span {
-            color: rgba(255,255,255,0.5);
-            font-size: 13px;
+        .level-title {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .level-description {
+            color: rgba(255,255,255,0.6);
+            font-size: 17px;
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        .levels {
+            display: grid;
+            gap: 14px;
+        }
+
+        .level-card {
+            width: 100%;
+            padding: 22px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .level-card:hover {
+            transform: translateY(-2px);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .level-card.selected {
+            border: 2px solid #f3d477;
+            background: rgba(243,212,119,0.08);
+            box-shadow: 0 0 30px rgba(243,212,119,0.08);
+        }
+
+        .level-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .level-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .level-text {
+            color: rgba(255,255,255,0.55);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .continue {
+            width: 100%;
+            margin-top: 25px;
+            opacity: 0.45;
+        }
+
+        .continue.ready {
+            opacity: 1;
         }
 
         @media (max-width: 600px) {
-            h1 {
-                font-size: 48px;
+            .level-title {
+                font-size: 32px;
             }
 
-            .subtitle {
-                font-size: 16px;
+            .level-description {
+                font-size: 15px;
             }
 
-            .stats {
-                gap: 20px;
+            .level-card {
+                padding: 18px;
             }
         }
     </style>
@@ -144,74 +223,178 @@
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <header>
+    <header>
 
-            <div class="logo">
-                <div class="logo-icon">✦</div>
-                BíbliaQuest
+        <div class="logo">
+            <div class="logo-icon">✦</div>
+            BíbliaQuest
+        </div>
+
+        <a href="#" class="login">Entrar</a>
+
+    </header>
+
+    <!-- TELA INICIAL -->
+
+    <section id="home" class="screen active">
+
+        <div class="hero">
+
+            <div class="badge">
+                ✦ UMA NOVA FORMA DE APRENDER A BÍBLIA
             </div>
 
-            <a href="#" class="login">Entrar</a>
+            <h1>
+                Sua jornada pela
+                <span>Bíblia começa aqui.</span>
+            </h1>
 
-        </header>
+            <p class="subtitle">
+                Aprenda, descubra e memorize a Palavra
+                através de jornadas interativas,
+                desafios, conquistas e um tutor
+                inteligente que acompanha sua evolução.
+            </p>
 
-        <main class="hero">
+            <button class="button" onclick="mostrarNivel()">
+                Começar minha jornada →
+            </button>
 
-            <div class="hero-content">
+        </div>
 
-                <div class="badge">
-                    ✦ UMA NOVA FORMA DE APRENDER A BÍBLIA
-                </div>
+    </section>
 
-                <h1>
-                    Sua jornada pela
-                    <span>Bíblia começa aqui.</span>
-                </h1>
+    <!-- TELA DE NÍVEL -->
 
-                <p class="subtitle">
-                    Aprenda, descubra e memorize a Palavra através de
-                    jornadas interativas, desafios, conquistas e um tutor
-                    inteligente que acompanha sua evolução.
-                </p>
+    <section id="nivel" class="screen">
 
-                <button class="button" onclick="começar()">
-                    Começar minha jornada →
+        <div class="level-container">
+
+            <button class="back" onclick="voltarInicio()">
+                ← Voltar
+            </button>
+
+            <h2 class="level-title">
+                Antes de começar...
+            </h2>
+
+            <p class="level-description">
+                Queremos adaptar sua jornada ao seu
+                conhecimento atual da Bíblia.
+            </p>
+
+            <div class="levels">
+
+                <button class="level-card" onclick="selecionarNivel(this)">
+
+                    <div class="level-icon">🌱</div>
+
+                    <div class="level-name">
+                        Estou começando
+                    </div>
+
+                    <div class="level-text">
+                        Quero conhecer a Bíblia desde o início.
+                    </div>
+
                 </button>
 
-                <div class="stats">
+                <button class="level-card" onclick="selecionarNivel(this)">
 
-                    <div class="stat">
-                        <strong>📖</strong>
-                        <span>Jornadas bíblicas</span>
+                    <div class="level-icon">📖</div>
+
+                    <div class="level-name">
+                        Já conheço algumas coisas
                     </div>
 
-                    <div class="stat">
-                        <strong>🎮</strong>
-                        <span>Aprendizado gamificado</span>
+                    <div class="level-text">
+                        Conheço histórias bíblicas,
+                        mas quero aprofundar.
                     </div>
 
-                    <div class="stat">
-                        <strong>🤖</strong>
-                        <span>Tutor inteligente</span>
+                </button>
+
+                <button class="level-card" onclick="selecionarNivel(this)">
+
+                    <div class="level-icon">🔥</div>
+
+                    <div class="level-name">
+                        Conheço bastante
                     </div>
 
-                </div>
+                    <div class="level-text">
+                        Quero testar meus conhecimentos
+                        e enfrentar desafios mais avançados.
+                    </div>
+
+                </button>
 
             </div>
 
-        </main>
+            <button
+                id="continueButton"
+                class="button continue"
+                onclick="continuar()"
+            >
+                Continuar →
+            </button>
 
-    </div>
+        </div>
 
-    <script>
+    </section>
 
-        function começar() {
-            alert("🚀 Sua jornada pelo BíbliaQuest vai começar!");
-        }
+</div>
 
-    </script>
+<script>
+
+    function mostrarNivel() {
+
+        document.getElementById("home")
+            .classList.remove("active");
+
+        document.getElementById("nivel")
+            .classList.add("active");
+
+    }
+
+    function voltarInicio() {
+
+        document.getElementById("nivel")
+            .classList.remove("active");
+
+        document.getElementById("home")
+            .classList.add("active");
+
+    }
+
+    function selecionarNivel(card) {
+
+        document.querySelectorAll(".level-card")
+            .forEach(function(item) {
+
+                item.classList.remove("selected");
+
+            });
+
+        card.classList.add("selected");
+
+        document.getElementById("continueButton")
+            .classList.add("ready");
+
+    }
+
+    function continuar() {
+
+        alert(
+            "🎯 Perfeito! Agora vamos criar sua jornada personalizada."
+        );
+
+    }
+
+</script>
 
 </body>
+
 </html>
