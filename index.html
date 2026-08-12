@@ -24,13 +24,9 @@ body{
     color:white;
 }
 
-button{
-    font-family:inherit;
-}
-
 .container{
     width:90%;
-    max-width:1100px;
+    max-width:1050px;
     margin:auto;
 }
 
@@ -61,23 +57,11 @@ header{
     font-size:22px;
 }
 
-.header-stats{
+.stats{
     display:flex;
     gap:18px;
-    align-items:center;
     font-size:14px;
-}
-
-.stat{
-    color:#fff;
-}
-
-.gold{
-    color:#f3d477;
-}
-
-.red{
-    color:#ff7676;
+    color:rgba(255,255,255,.8);
 }
 
 .screen{
@@ -85,7 +69,7 @@ header{
     display:none;
     align-items:center;
     justify-content:center;
-    padding:30px 0 60px;
+    padding:30px 0;
 }
 
 .screen.active{
@@ -110,7 +94,7 @@ header{
 }
 
 h1{
-    font-size:clamp(45px,7vw,72px);
+    font-size:clamp(44px,7vw,72px);
     line-height:1;
     margin-bottom:25px;
 }
@@ -143,15 +127,13 @@ h1 span{
     box-shadow:0 12px 30px rgba(212,175,55,.25);
 }
 
-.button.secondary{
-    background:rgba(255,255,255,.06);
-    color:white;
-    border:1px solid rgba(255,255,255,.12);
+.button.full{
+    width:100%;
 }
 
-.content{
+.level-container{
     width:100%;
-    max-width:760px;
+    max-width:720px;
 }
 
 .back{
@@ -163,26 +145,26 @@ h1 span{
     font-size:14px;
 }
 
-.title{
+.level-title{
     font-size:42px;
     margin-bottom:12px;
 }
 
-.description{
+.level-description{
     color:rgba(255,255,255,.6);
     font-size:17px;
     margin-bottom:30px;
     line-height:1.6;
 }
 
-.cards{
+.levels{
     display:grid;
     gap:14px;
 }
 
-.card{
+.level-card{
     width:100%;
-    padding:22px;
+    padding:21px;
     border-radius:18px;
     background:rgba(255,255,255,.05);
     border:1px solid rgba(255,255,255,.1);
@@ -192,88 +174,69 @@ h1 span{
     transition:.2s;
 }
 
-.card:hover{
+.level-card:hover{
     transform:translateY(-2px);
     background:rgba(255,255,255,.08);
 }
 
-.card.selected{
+.level-card.selected{
     border:2px solid #f3d477;
     background:rgba(243,212,119,.08);
     box-shadow:0 0 30px rgba(243,212,119,.08);
 }
 
-.icon{
+.level-icon{
     font-size:30px;
-    margin-bottom:10px;
+    margin-bottom:9px;
 }
 
-.card-title{
+.level-name{
     font-size:18px;
     font-weight:bold;
     margin-bottom:6px;
 }
 
-.card-text{
+.level-text{
     color:rgba(255,255,255,.55);
     font-size:14px;
     line-height:1.5;
 }
 
-.full{
+.continue{
     width:100%;
     margin-top:22px;
+    opacity:.45;
 }
 
-/* DASHBOARD */
+.continue.ready{
+    opacity:1;
+}
 
-.dashboard{
+/* JORNADA */
+
+.journey{
     width:100%;
-    max-width:900px;
+    max-width:850px;
 }
 
-.welcome{
-    margin-bottom:25px;
+.journey-header{
+    text-align:center;
+    margin-bottom:35px;
 }
 
-.welcome h2{
-    font-size:34px;
-    margin-bottom:8px;
+.journey-header h2{
+    font-size:40px;
+    margin-bottom:10px;
 }
 
-.welcome p{
+.journey-header p{
     color:rgba(255,255,255,.6);
-}
-
-.stats-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-    margin-bottom:30px;
-}
-
-.stat-box{
-    padding:18px;
-    border-radius:16px;
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.08);
-}
-
-.stat-number{
-    font-size:25px;
-    font-weight:bold;
-    margin-bottom:5px;
-}
-
-.stat-label{
-    color:rgba(255,255,255,.55);
-    font-size:13px;
 }
 
 .progress-box{
     background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.08);
-    padding:22px;
+    border:1px solid rgba(255,255,255,.1);
+    padding:18px;
     border-radius:18px;
     margin-bottom:25px;
 }
@@ -281,11 +244,12 @@ h1 span{
 .progress-top{
     display:flex;
     justify-content:space-between;
-    margin-bottom:12px;
+    margin-bottom:10px;
     font-size:14px;
 }
 
 .progress-bar{
+    width:100%;
     height:9px;
     background:rgba(255,255,255,.1);
     border-radius:20px;
@@ -293,89 +257,113 @@ h1 span{
 }
 
 .progress-fill{
+    width:18%;
     height:100%;
-    width:0%;
-    background:linear-gradient(90deg,#c69a32,#f3d477);
-    transition:.5s;
+    background:linear-gradient(90deg,#f3d477,#c69a32);
+    border-radius:20px;
 }
 
-.section-title{
-    font-size:22px;
-    margin-bottom:15px;
-}
-
-/* MAPA */
-
-.map{
+.path{
     display:grid;
-    gap:15px;
+    gap:16px;
 }
 
 .lesson{
-    position:relative;
     display:flex;
     align-items:center;
     gap:18px;
-    padding:18px;
+    padding:20px;
     border-radius:20px;
     background:rgba(255,255,255,.05);
     border:1px solid rgba(255,255,255,.1);
 }
 
-.lesson.active{
-    border:1px solid #f3d477;
-    background:rgba(243,212,119,.07);
-}
-
-.lesson.locked{
-    opacity:.45;
-}
-
 .lesson-icon{
     width:55px;
     height:55px;
-    flex-shrink:0;
+    min-width:55px;
     border-radius:50%;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(135deg,#f3d477,#b88720);
-    color:#07111f;
-    font-size:24px;
-    font-weight:bold;
-}
-
-.lesson.locked .lesson-icon{
-    background:rgba(255,255,255,.1);
-    color:white;
+    font-size:25px;
+    background:rgba(243,212,119,.12);
 }
 
 .lesson-info{
     flex:1;
 }
 
-.lesson-name{
-    font-weight:bold;
+.lesson-info h3{
     margin-bottom:5px;
 }
 
-.lesson-desc{
+.lesson-info p{
     color:rgba(255,255,255,.55);
-    font-size:13px;
+    font-size:14px;
 }
 
-.lesson-button{
+.lesson button{
     border:none;
+    padding:11px 17px;
     border-radius:10px;
-    padding:10px 14px;
     background:#f3d477;
-    color:#07111f;
+    color:#101820;
     font-weight:bold;
     cursor:pointer;
 }
 
-.lesson.locked .lesson-button{
-    display:none;
+.lesson.locked{
+    opacity:.45;
+}
+
+.lesson.locked button{
+    background:rgba(255,255,255,.1);
+    color:white;
+    cursor:not-allowed;
+}
+
+/* MISSÃO */
+
+.mission{
+    width:100%;
+    max-width:700px;
+    text-align:center;
+}
+
+.mission-badge{
+    color:#f3d477;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.mission h2{
+    font-size:40px;
+    margin-bottom:15px;
+}
+
+.mission-description{
+    color:rgba(255,255,255,.6);
+    line-height:1.6;
+    margin-bottom:30px;
+}
+
+.mission-card{
+    padding:30px;
+    border-radius:24px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+}
+
+.verse{
+    font-size:22px;
+    line-height:1.6;
+    margin-bottom:12px;
+}
+
+.reference{
+    color:#f3d477;
+    font-weight:bold;
 }
 
 /* QUIZ */
@@ -388,22 +376,22 @@ h1 span{
 .quiz-top{
     display:flex;
     justify-content:space-between;
-    margin-bottom:15px;
+    margin-bottom:18px;
+    color:rgba(255,255,255,.7);
     font-size:14px;
-    color:rgba(255,255,255,.65);
 }
 
-.question-box{
+.question-card{
     background:rgba(255,255,255,.05);
     border:1px solid rgba(255,255,255,.1);
-    border-radius:20px;
+    border-radius:24px;
     padding:30px;
-    margin-bottom:18px;
 }
 
-.question{
-    font-size:25px;
+.question-card h2{
+    font-size:27px;
     line-height:1.4;
+    margin-bottom:25px;
 }
 
 .answers{
@@ -415,7 +403,7 @@ h1 span{
     padding:18px;
     border-radius:14px;
     border:1px solid rgba(255,255,255,.12);
-    background:rgba(255,255,255,.05);
+    background:rgba(255,255,255,.04);
     color:white;
     text-align:left;
     cursor:pointer;
@@ -424,54 +412,25 @@ h1 span{
 }
 
 .answer:hover{
-    background:rgba(255,255,255,.09);
+    background:rgba(255,255,255,.08);
 }
 
 .answer.correct{
-    border-color:#54d88b;
-    background:rgba(84,216,139,.12);
+    background:rgba(55,180,100,.18);
+    border-color:#55c477;
 }
 
 .answer.wrong{
-    border-color:#ff6868;
-    background:rgba(255,104,104,.12);
-}
-
-.explanation{
-    display:none;
-    margin-top:18px;
-    padding:18px;
-    border-radius:15px;
-    background:rgba(243,212,119,.07);
-    border:1px solid rgba(243,212,119,.2);
-}
-
-.explanation.show{
-    display:block;
-}
-
-.explanation-title{
-    color:#f3d477;
-    font-weight:bold;
-    margin-bottom:8px;
-}
-
-.next-question{
-    display:none;
-    width:100%;
-    margin-top:15px;
-}
-
-.next-question.show{
-    display:block;
+    background:rgba(220,70,70,.18);
+    border-color:#e07070;
 }
 
 /* RESULTADO */
 
 .result{
-    text-align:center;
     width:100%;
     max-width:600px;
+    text-align:center;
 }
 
 .result-icon{
@@ -480,70 +439,65 @@ h1 span{
 }
 
 .result h2{
-    font-size:40px;
-    margin-bottom:10px;
+    font-size:42px;
+    margin-bottom:15px;
 }
 
 .result p{
-    color:rgba(255,255,255,.6);
+    color:rgba(255,255,255,.65);
+    line-height:1.6;
     margin-bottom:25px;
 }
 
-.result-stats{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-    margin-bottom:25px;
-}
-
-.result-box{
-    padding:20px;
-    border-radius:16px;
-    background:rgba(255,255,255,.05);
-}
-
-.result-number{
-    font-size:26px;
-    font-weight:bold;
+.xp{
+    display:inline-block;
+    padding:12px 22px;
+    border-radius:30px;
+    background:rgba(243,212,119,.1);
     color:#f3d477;
+    font-weight:bold;
+    margin-bottom:30px;
 }
 
-.result-label{
-    font-size:12px;
-    color:rgba(255,255,255,.5);
-    margin-top:5px;
+.final-card{
+    padding:25px;
+    border-radius:20px;
+    background:rgba(255,255,255,.05);
+    margin-bottom:25px;
 }
+
+.final-card strong{
+    font-size:30px;
+    display:block;
+    margin-bottom:5px;
+}
+
+/* MOBILE */
 
 @media(max-width:600px){
 
-    .header-stats{
+    .stats{
         gap:8px;
         font-size:12px;
     }
 
-    .title{
+    .level-title,
+    .journey-header h2,
+    .mission h2,
+    .result h2{
         font-size:32px;
     }
 
-    .stats-grid{
-        grid-template-columns:1fr;
-    }
-
-    .result-stats{
-        grid-template-columns:1fr;
+    .question-card h2{
+        font-size:22px;
     }
 
     .lesson{
-        padding:14px;
+        align-items:flex-start;
     }
 
-    .lesson-button{
-        padding:8px 10px;
-        font-size:12px;
-    }
-
-    .question{
-        font-size:21px;
+    .lesson button{
+        padding:9px 12px;
     }
 
 }
@@ -557,18 +511,15 @@ h1 span{
 
 <header>
 
-<div class="logo">
-<div class="logo-icon">✦</div>
-BíbliaQuest
-</div>
+    <div class="logo">
+        <div class="logo-icon">✦</div>
+        BíbliaQuest
+    </div>
 
-<div class="header-stats">
-
-<div class="stat">⭐ <span id="headerXP">0</span> XP</div>
-<div class="stat red">❤️ <span id="headerLives">5</span></div>
-<div class="stat">🔥 <span id="headerStreak">1</span></div>
-
-</div>
+    <div class="stats">
+        🔥 <span id="streak">0</span>
+        ⭐ <span id="xp">0</span> XP
+    </div>
 
 </header>
 
@@ -579,25 +530,25 @@ BíbliaQuest
 
 <div class="hero">
 
-<div class="badge">
-✦ UMA NOVA FORMA DE APRENDER A BÍBLIA
-</div>
+    <div class="badge">
+        ✦ UMA NOVA FORMA DE APRENDER A BÍBLIA
+    </div>
 
-<h1>
-Sua jornada pela
-<span>Bíblia começa aqui.</span>
-</h1>
+    <h1>
+        Sua jornada pela
+        <span>Bíblia começa aqui.</span>
+    </h1>
 
-<p class="subtitle">
-Aprenda, descubra e memorize a Palavra
-através de jornadas interativas,
-desafios, conquistas e um tutor
-inteligente que acompanha sua evolução.
-</p>
+    <p class="subtitle">
+        Aprenda, descubra e memorize a Palavra
+        através de jornadas interativas,
+        desafios, conquistas e um tutor
+        inteligente que acompanha sua evolução.
+    </p>
 
-<button class="button" onclick="mostrarNivel()">
-Começar minha jornada →
-</button>
+    <button class="button" onclick="mostrarNivel()">
+        Começar minha jornada →
+    </button>
 
 </div>
 
@@ -608,77 +559,55 @@ Começar minha jornada →
 
 <section id="nivel" class="screen">
 
-<div class="content">
+<div class="level-container">
 
-<button class="back" onclick="voltarInicio()">
-← Voltar
+<button class="back" onclick="mostrarTela('home')">
+    ← Voltar
 </button>
 
-<h2 class="title">
-Antes de começar...
+<h2 class="level-title">
+    Antes de começar...
 </h2>
 
-<p class="description">
-Queremos adaptar sua jornada ao seu conhecimento atual da Bíblia.
+<p class="level-description">
+    Queremos adaptar sua jornada ao seu
+    conhecimento atual da Bíblia.
 </p>
 
-<div class="cards">
+<div class="levels">
 
-<button class="card" onclick="selecionarNivel(this)">
-
-<div class="icon">🌱</div>
-
-<div class="card-title">
-Estou começando
-</div>
-
-<div class="card-text">
-Quero conhecer a Bíblia desde o início.
-</div>
-
+<button class="level-card" onclick="selecionarNivel(this)">
+    <div class="level-icon">🌱</div>
+    <div class="level-name">Estou começando</div>
+    <div class="level-text">
+        Quero conhecer a Bíblia desde o início.
+    </div>
 </button>
 
-
-<button class="card" onclick="selecionarNivel(this)">
-
-<div class="icon">📖</div>
-
-<div class="card-title">
-Já conheço algumas coisas
-</div>
-
-<div class="card-text">
-Conheço histórias bíblicas,
-mas quero aprofundar.
-</div>
-
+<button class="level-card" onclick="selecionarNivel(this)">
+    <div class="level-icon">📖</div>
+    <div class="level-name">Já conheço algumas coisas</div>
+    <div class="level-text">
+        Conheço histórias bíblicas,
+        mas quero aprofundar.
+    </div>
 </button>
 
-
-<button class="card" onclick="selecionarNivel(this)">
-
-<div class="icon">🔥</div>
-
-<div class="card-title">
-Conheço bastante
-</div>
-
-<div class="card-text">
-Quero testar meus conhecimentos
-e enfrentar desafios mais avançados.
-</div>
-
+<button class="level-card" onclick="selecionarNivel(this)">
+    <div class="level-icon">🔥</div>
+    <div class="level-name">Conheço bastante</div>
+    <div class="level-text">
+        Quero testar meus conhecimentos
+        e enfrentar desafios mais avançados.
+    </div>
 </button>
 
 </div>
 
-<button id="continueLevel"
-class="button full"
-style="opacity:.45"
+<button id="continueButton"
+class="button continue"
 onclick="continuarNivel()">
-
-Continuar →
-
+    Continuar →
 </button>
 
 </div>
@@ -690,94 +619,77 @@ Continuar →
 
 <section id="objetivo" class="screen">
 
-<div class="content">
+<div class="level-container">
 
-<button class="back" onclick="voltarNivel()">
-← Voltar
+<button class="back" onclick="mostrarTela('nivel')">
+    ← Voltar
 </button>
 
-<h2 class="title">
-Qual é o seu objetivo?
+<h2 class="level-title">
+    Qual é o seu objetivo?
 </h2>
 
-<p class="description">
-Escolha o que você mais deseja alcançar durante sua jornada.
+<p class="level-description">
+    Escolha o que você mais deseja alcançar
+    durante sua jornada no BíbliaQuest.
 </p>
 
-<div class="cards">
+<div class="levels">
 
-<button class="card" onclick="selecionarObjetivo(this)">
-
-<div class="icon">📖</div>
-
-<div class="card-title">
-Conhecer melhor a Bíblia
-</div>
-
-<div class="card-text">
-Quero entender as histórias,
-personagens e ensinamentos das Escrituras.
-</div>
-
+<button class="level-card objetivo-card"
+onclick="selecionarObjetivo(this)">
+    <div class="level-icon">📖</div>
+    <div class="level-name">
+        Conhecer melhor a Bíblia
+    </div>
+    <div class="level-text">
+        Quero entender histórias,
+        personagens e ensinamentos das Escrituras.
+    </div>
 </button>
 
-
-<button class="card" onclick="selecionarObjetivo(this)">
-
-<div class="icon">🧠</div>
-
-<div class="card-title">
-Memorizar versículos
-</div>
-
-<div class="card-text">
-Quero guardar a Palavra de Deus
-no meu coração.
-</div>
-
+<button class="level-card objetivo-card"
+onclick="selecionarObjetivo(this)">
+    <div class="level-icon">🧠</div>
+    <div class="level-name">
+        Memorizar versículos
+    </div>
+    <div class="level-text">
+        Quero guardar a Palavra de Deus
+        no meu coração.
+    </div>
 </button>
 
-
-<button class="card" onclick="selecionarObjetivo(this)">
-
-<div class="icon">🔥</div>
-
-<div class="card-title">
-Fortalecer minha fé
-</div>
-
-<div class="card-text">
-Quero desenvolver uma vida
-espiritual mais próxima de Deus.
-</div>
-
+<button class="level-card objetivo-card"
+onclick="selecionarObjetivo(this)">
+    <div class="level-icon">🔥</div>
+    <div class="level-name">
+        Fortalecer minha fé
+    </div>
+    <div class="level-text">
+        Quero desenvolver uma vida
+        espiritual mais próxima de Deus.
+    </div>
 </button>
 
-
-<button class="card" onclick="selecionarObjetivo(this)">
-
-<div class="icon">🏆</div>
-
-<div class="card-title">
-Testar meus conhecimentos
-</div>
-
-<div class="card-text">
-Quero responder desafios
-e provar o quanto conheço a Bíblia.
-</div>
-
+<button class="level-card objetivo-card"
+onclick="selecionarObjetivo(this)">
+    <div class="level-icon">🏆</div>
+    <div class="level-name">
+        Testar meus conhecimentos
+    </div>
+    <div class="level-text">
+        Quero responder desafios
+        e provar o quanto conheço a Bíblia.
+    </div>
 </button>
 
 </div>
 
-<button id="continueObjective"
-class="button full"
-style="opacity:.45"
+<button id="objectiveContinue"
+class="button continue"
 onclick="continuarObjetivo()">
-
-Começar minha jornada →
-
+    Continuar →
 </button>
 
 </div>
@@ -785,145 +697,52 @@ Começar minha jornada →
 </section>
 
 
-<!-- ================= DASHBOARD ================= -->
+<!-- ================= JORNADA ================= -->
 
-<section id="dashboard" class="screen">
+<section id="jornada" class="screen">
 
-<div class="dashboard">
+<div class="journey">
 
-<div class="welcome">
+<div class="journey-header">
 
 <h2>
-Sua jornada começou! 🚀
+    Sua jornada começou! 🚀
 </h2>
 
 <p>
-Continue avançando e descubra a Bíblia de uma nova maneira.
+    Construa seu conhecimento bíblico uma missão de cada vez.
 </p>
 
 </div>
 
-<div class="stats-grid">
-
-<div class="stat-box">
-
-<div id="xpValue" class="stat-number gold">
-0
-</div>
-
-<div class="stat-label">
-XP conquistado
-</div>
-
-</div>
-
-
-<div class="stat-box">
-
-<div id="livesValue" class="stat-number red">
-❤️ 5
-</div>
-
-<div class="stat-label">
-Vidas disponíveis
-</div>
-
-</div>
-
-
-<div class="stat-box">
-
-<div id="streakValue" class="stat-number">
-🔥 1
-</div>
-
-<div class="stat-label">
-Dias de sequência
-</div>
-
-</div>
-
-</div>
-
-
 <div class="progress-box">
 
 <div class="progress-top">
-
-<span>
-Progresso da jornada
-</span>
-
-<span id="progressText">
-0%
-</span>
-
+<span>Progresso da jornada</span>
+<strong>18%</strong>
 </div>
 
 <div class="progress-bar">
-
-<div id="progressFill"
-class="progress-fill">
+<div class="progress-fill"></div>
 </div>
 
 </div>
 
-</div>
-
-
-<h3 class="section-title">
-🗺️ Sua jornada
-</h3>
-
-<div class="map">
-
-
-<div class="lesson active">
-
-<div class="lesson-icon">
-1
-</div>
-
-<div class="lesson-info">
-
-<div class="lesson-name">
-O começo de tudo
-</div>
-
-<div class="lesson-desc">
-Gênesis • A criação e o início da humanidade
-</div>
-
-</div>
-
-<button class="lesson-button"
-onclick="iniciarLicao(0)">
-Começar
-</button>
-
-</div>
-
+<div class="path">
 
 <div class="lesson">
 
-<div class="lesson-icon">
-2
-</div>
+<div class="lesson-icon">📖</div>
 
 <div class="lesson-info">
-
-<div class="lesson-name">
-Abraão e a promessa
+<h3>Missão 1 — O começo de tudo</h3>
+<p>
+Descubra como a Bíblia começa e conheça
+a história da criação.
+</p>
 </div>
 
-<div class="lesson-desc">
-Descubra a história de Abraão e sua fé.
-</div>
-
-</div>
-
-<button class="lesson-button"
-onclick="iniciarLicao(1)">
+<button onclick="abrirMissao()">
 Começar
 </button>
 
@@ -932,47 +751,101 @@ Começar
 
 <div class="lesson locked">
 
-<div class="lesson-icon">
-🔒
-</div>
+<div class="lesson-icon">🌊</div>
 
 <div class="lesson-info">
-
-<div class="lesson-name">
-José do Egito
+<h3>Missão 2 — Noé e o dilúvio</h3>
+<p>
+Conheça uma das histórias mais marcantes
+do livro de Gênesis.
+</p>
 </div>
 
-<div class="lesson-desc">
-Complete a etapa anterior para desbloquear.
-</div>
-
-</div>
+<button disabled>
+🔒
+</button>
 
 </div>
 
 
 <div class="lesson locked">
 
-<div class="lesson-icon">
-🔒
-</div>
+<div class="lesson-icon">⭐</div>
 
 <div class="lesson-info">
-
-<div class="lesson-name">
-Moisés
+<h3>Missão 3 — A promessa de Deus</h3>
+<p>
+Conheça a história de Abraão e sua fé.
+</p>
 </div>
 
-<div class="lesson-desc">
-Uma nova etapa será desbloqueada em breve.
+<button disabled>
+🔒
+</button>
+
 </div>
+
+
+<div class="lesson locked">
+
+<div class="lesson-icon">🔥</div>
+
+<div class="lesson-info">
+<h3>Missão 4 — O chamado</h3>
+<p>
+Uma nova etapa da sua jornada bíblica.
+</p>
+</div>
+
+<button disabled>
+🔒
+</button>
 
 </div>
 
 </div>
 
+</div>
+
+</section>
+
+
+<!-- ================= MISSÃO ================= -->
+
+<section id="missao" class="screen">
+
+<div class="mission">
+
+<div class="mission-badge">
+MISSÃO 1 • O COMEÇO DE TUDO
+</div>
+
+<h2>
+A criação
+</h2>
+
+<p class="mission-description">
+Antes de responder à primeira pergunta,
+vamos conhecer o texto bíblico.
+</p>
+
+<div class="mission-card">
+
+<div class="verse">
+“No princípio, criou Deus os céus e a terra.”
+</div>
+
+<div class="reference">
+Gênesis 1:1
+</div>
 
 </div>
+
+<br>
+
+<button class="button full" onclick="abrirQuiz()">
+Começar desafio →
+</button>
 
 </div>
 
@@ -981,63 +854,59 @@ Uma nova etapa será desbloqueada em breve.
 
 <!-- ================= QUIZ ================= -->
 
-<section id="quizScreen" class="screen">
+<section id="quiz" class="screen">
 
 <div class="quiz">
 
 <div class="quiz-top">
 
-<span id="questionCounter">
-Pergunta 1 de 3
-</span>
+<span>Questão 1 de 3</span>
 
-<span>
-❤️ <span id="quizLives">5</span>
-</span>
+<span>❤️ ❤️ ❤️</span>
 
 </div>
 
 <div class="progress-bar">
-
 <div id="quizProgress"
 class="progress-fill"
 style="width:33%">
 </div>
-
 </div>
 
 <br>
 
-<div class="question-box">
+<div class="question-card">
 
-<div id="question"
-class="question">
-Carregando pergunta...
-</div>
+<h2>
+Segundo Gênesis 1:1,
+o que Deus criou no princípio?
+</h2>
 
-</div>
+<div class="answers">
 
-<div id="answers" class="answers">
-</div>
-
-<div id="explanation" class="explanation">
-
-<div class="explanation-title">
-📖 Explicação bíblica
-</div>
-
-<div id="explanationText">
-</div>
-
-</div>
-
-<button id="nextQuestion"
-class="button next-question"
-onclick="proximaPergunta()">
-
-Continuar →
-
+<button class="answer"
+onclick="responder(this,false)">
+Apenas a humanidade
 </button>
+
+<button class="answer"
+onclick="responder(this,true)">
+Os céus e a terra
+</button>
+
+<button class="answer"
+onclick="responder(this,false)">
+Somente os animais
+</button>
+
+<button class="answer"
+onclick="responder(this,false)">
+Apenas o mar
+</button>
+
+</div>
+
+</div>
 
 </div>
 
@@ -1046,72 +915,43 @@ Continuar →
 
 <!-- ================= RESULTADO ================= -->
 
-<section id="resultScreen" class="screen">
+<section id="resultado" class="screen">
 
 <div class="result">
 
-<div class="result-icon">
-🏆
+<div id="resultIcon"
+class="result-icon">
+🎉
 </div>
 
-<h2>
-Lição concluída!
+<h2 id="resultTitle">
+Muito bem!
 </h2>
 
-<p>
-Você avançou mais um passo na sua jornada bíblica.
+<p id="resultText">
+Você completou sua primeira pergunta
+da jornada BíbliaQuest.
 </p>
 
-<div class="result-stats">
-
-<div class="result-box">
-
-<div id="resultCorrect"
-class="result-number">
-0
+<div class="xp">
++10 XP ⭐
 </div>
 
-<div class="result-label">
-Acertos
-</div>
+<div class="final-card">
 
-</div>
+<strong id="totalXP">
+10 XP
+</strong>
 
-
-<div class="result-box">
-
-<div id="resultXP"
-class="result-number">
-0
-</div>
-
-<div class="result-label">
-XP ganho
-</div>
-
-</div>
-
-
-<div class="result-box">
-
-<div id="resultPercent"
-class="result-number">
-0%
-</div>
-
-<div class="result-label">
-Desempenho
-</div>
-
-</div>
+<span>
+Seu conhecimento está crescendo.
+</span>
 
 </div>
 
 <button class="button full"
-onclick="voltarMapa()">
-
-Voltar para minha jornada →
-
+onclick="voltarJornada()">
+Continuar jornada →
 </button>
 
 </div>
@@ -1123,430 +963,242 @@ Voltar para minha jornada →
 
 <script>
 
-/* =============================
-   ESTADO DO JOGO
-============================= */
-
-let nivelSelecionado = false;
-
-let objetivoSelecionado = false;
-
-let xp = 0;
-
-let vidas = 5;
-
-let sequencia = 1;
-
-let progresso = 0;
-
-let perguntaAtual = 0;
-
-let acertos = 0;
-
-let perguntasAtuais = [];
+let nivelEscolhido = "";
+let objetivoEscolhido = "";
+let xpAtual = 0;
+let perguntaRespondida = false;
 
 
-/* =============================
-   PERGUNTAS
-============================= */
-
-const perguntas = [
-
-{
-pergunta:"Quem criou os céus e a terra segundo Gênesis 1?",
-respostas:[
-"Abraão",
-"Moisés",
-"Deus",
-"Adão"
-],
-correta:2,
-explicacao:"Gênesis 1 apresenta Deus como o Criador dos céus, da terra e de toda a criação."
-},
-
-{
-pergunta:"Qual foi o primeiro homem criado por Deus?",
-respostas:[
-"Noé",
-"Adão",
-"Abraão",
-"Isaac"
-],
-correta:1,
-explicacao:"Segundo Gênesis 2, Deus formou o homem do pó da terra e deu a ele o nome de Adão."
-},
-
-{
-pergunta:"Onde Adão e Eva viviam?",
-respostas:[
-"Egito",
-"Jerusalém",
-"Jardim do Éden",
-"Monte Sinai"
-],
-correta:2,
-explicacao:"Gênesis 2 descreve o Jardim do Éden como o lugar onde Deus colocou Adão e Eva."
-}
-
-];
-
-
-/* =============================
-   CONTROLE DE TELAS
-============================= */
+/* ================= CONTROLE DE TELAS ================= */
 
 function mostrarTela(id){
 
-document.querySelectorAll(".screen")
-.forEach(function(tela){
+    document.querySelectorAll(".screen")
+    .forEach(function(tela){
 
-tela.classList.remove("active");
+        tela.classList.remove("active");
 
-});
+    });
 
-document.getElementById(id)
-.classList.add("active");
+    document.getElementById(id)
+    .classList.add("active");
 
-window.scrollTo(0,0);
-
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
 }
 
 
-/* =============================
-   INÍCIO
-============================= */
+/* ================= INÍCIO ================= */
 
 function mostrarNivel(){
 
-mostrarTela("nivel");
-
-}
-
-function voltarInicio(){
-
-mostrarTela("home");
+    mostrarTela("nivel");
 
 }
 
 
-/* =============================
-   NÍVEL
-============================= */
+/* ================= NÍVEL ================= */
 
 function selecionarNivel(card){
 
-document.querySelectorAll("#nivel .card")
-.forEach(function(item){
+    document
+    .querySelectorAll("#nivel .level-card")
+    .forEach(function(item){
 
-item.classList.remove("selected");
+        item.classList.remove("selected");
 
-});
+    });
 
-card.classList.add("selected");
+    card.classList.add("selected");
 
-nivelSelecionado = true;
+    nivelEscolhido =
+        card.querySelector(".level-name").innerText;
 
-document.getElementById("continueLevel")
-.style.opacity="1";
+    document
+    .getElementById("continueButton")
+    .classList.add("ready");
 
 }
 
 
 function continuarNivel(){
 
-if(!nivelSelecionado){
+    if(nivelEscolhido === ""){
 
-return;
+        return;
 
-}
+    }
 
-mostrarTela("objetivo");
-
-}
-
-
-function voltarNivel(){
-
-mostrarTela("nivel");
+    mostrarTela("objetivo");
 
 }
 
 
-/* =============================
-   OBJETIVO
-============================= */
+/* ================= OBJETIVO ================= */
 
 function selecionarObjetivo(card){
 
-document.querySelectorAll("#objetivo .card")
-.forEach(function(item){
+    document
+    .querySelectorAll("#objetivo .objetivo-card")
+    .forEach(function(item){
 
-item.classList.remove("selected");
+        item.classList.remove("selected");
 
-});
+    });
 
-card.classList.add("selected");
+    card.classList.add("selected");
 
-objetivoSelecionado = true;
+    objetivoEscolhido =
+        card.querySelector(".level-name").innerText;
 
-document.getElementById("continueObjective")
-.style.opacity="1";
+    document
+    .getElementById("objectiveContinue")
+    .classList.add("ready");
 
 }
 
 
 function continuarObjetivo(){
 
-if(!objetivoSelecionado){
+    if(objetivoEscolhido === ""){
 
-return;
+        return;
 
-}
+    }
 
-mostrarTela("dashboard");
-
-atualizarInterface();
+    mostrarTela("jornada");
 
 }
 
 
-/* =============================
-   INTERFACE
-============================= */
+/* ================= MISSÃO ================= */
 
-function atualizarInterface(){
+function abrirMissao(){
 
-document.getElementById("headerXP")
-.innerText=xp;
-
-document.getElementById("headerLives")
-.innerText=vidas;
-
-document.getElementById("headerStreak")
-.innerText=sequencia;
-
-document.getElementById("xpValue")
-.innerText=xp;
-
-document.getElementById("livesValue")
-.innerText="❤️ "+vidas;
-
-document.getElementById("streakValue")
-.innerText="🔥 "+sequencia;
-
-document.getElementById("progressText")
-.innerText=progresso+"%";
-
-document.getElementById("progressFill")
-.style.width=progresso+"%";
+    mostrarTela("missao");
 
 }
 
 
-/* =============================
-   LIÇÃO
-============================= */
+/* ================= QUIZ ================= */
 
-function iniciarLicao(numero){
+function abrirQuiz(){
 
-if(vidas<=0){
-
-alert("Você ficou sem vidas. Recarregue a página para começar novamente.");
-
-return;
-
-}
-
-perguntaAtual=0;
-
-acertos=0;
-
-perguntasAtuais=perguntas;
-
-mostrarTela("quizScreen");
-
-carregarPergunta();
+    mostrarTela("quiz");
 
 }
 
 
-/* =============================
-   CARREGAR PERGUNTA
-============================= */
+function responder(botao, correta){
 
-function carregarPergunta(){
+    if(perguntaRespondida){
 
-const pergunta=perguntasAtuais[perguntaAtual];
+        return;
 
-document.getElementById("questionCounter")
-.innerText=
-"Pergunta "+
-(perguntaAtual+1)+
-" de "+
-perguntasAtuais.length;
+    }
 
-document.getElementById("quizProgress")
-.style.width=
-((perguntaAtual+1)/perguntasAtuais.length*100)+"%";
+    perguntaRespondida = true;
 
-document.getElementById("question")
-.innerText=pergunta.pergunta;
+    const respostas =
+        document.querySelectorAll(".answer");
 
-const answers=
-document.getElementById("answers");
+    respostas.forEach(function(item){
 
-answers.innerHTML="";
+        item.disabled = true;
 
-document.getElementById("explanation")
-.classList.remove("show");
+    });
 
-document.getElementById("nextQuestion")
-.classList.remove("show");
+    if(correta){
 
+        botao.classList.add("correct");
 
-pergunta.respostas.forEach(function(resposta,index){
+        xpAtual += 10;
 
-const button=document.createElement("button");
+        document
+        .getElementById("xp")
+        .innerText = xpAtual;
 
-button.className="answer";
+        setTimeout(function(){
 
-button.innerText=resposta;
+            document
+            .getElementById("resultIcon")
+            .innerText = "🎉";
 
-button.onclick=function(){
+            document
+            .getElementById("resultTitle")
+            .innerText = "Resposta correta!";
 
-responder(button,index);
+            document
+            .getElementById("resultText")
+            .innerText =
+            "Excelente! Você acabou de aprender mais um detalhe importante da Palavra de Deus.";
 
-};
+            document
+            .getElementById("totalXP")
+            .innerText =
+            xpAtual + " XP";
 
-answers.appendChild(button);
+            mostrarTela("resultado");
 
-});
+        },700);
 
-document.getElementById("quizLives")
-.innerText=vidas;
+    }else{
 
-}
+        botao.classList.add("wrong");
 
+        setTimeout(function(){
 
-/* =============================
-   RESPONDER
-============================= */
+            document
+            .getElementById("resultIcon")
+            .innerText = "💡";
 
-function responder(button,index){
+            document
+            .getElementById("resultTitle")
+            .innerText = "Continue aprendendo!";
 
-const pergunta=perguntasAtuais[perguntaAtual];
+            document
+            .getElementById("resultText")
+            .innerText =
+            "Não tem problema errar. Cada resposta é uma oportunidade de aprender mais sobre a Bíblia.";
 
-const botoes=
-document.querySelectorAll(".answer");
+            document
+            .getElementById("totalXP")
+            .innerText =
+            xpAtual + " XP";
 
-botoes.forEach(function(item){
+            mostrarTela("resultado");
 
-item.disabled=true;
+        },700);
 
-});
-
-
-if(index===pergunta.correta){
-
-button.classList.add("correct");
-
-acertos++;
-
-xp+=10;
-
-document.getElementById("explanationText")
-.innerText=pergunta.explicacao;
-
-}else{
-
-button.classList.add("wrong");
-
-vidas--;
-
-botoes[pergunta.correta]
-.classList.add("correct");
-
-document.getElementById("explanationText")
-.innerText=
-"Você errou esta questão. "+
-pergunta.explicacao;
-
-}
-
-document.getElementById("explanation")
-.classList.add("show");
-
-document.getElementById("nextQuestion")
-.classList.add("show");
-
-atualizarInterface();
+    }
 
 }
 
 
-/* =============================
-   PRÓXIMA PERGUNTA
-============================= */
+/* ================= VOLTAR PARA JORNADA ================= */
 
-function proximaPergunta(){
+function voltarJornada(){
 
-perguntaAtual++;
+    perguntaRespondida = false;
 
-if(perguntaAtual>=perguntasAtuais.length){
+    document
+    .querySelectorAll(".answer")
+    .forEach(function(item){
 
-finalizarLicao();
+        item.disabled = false;
+        item.classList.remove("correct");
+        item.classList.remove("wrong");
 
-return;
+    });
 
-}
-
-carregarPergunta();
-
-}
-
-
-/* =============================
-   FINALIZAR LIÇÃO
-============================= */
-
-function finalizarLicao(){
-
-progresso=25;
-
-const xpGanho=acertos*10;
-
-document.getElementById("resultCorrect")
-.innerText=acertos;
-
-document.getElementById("resultXP")
-.innerText=xpGanho;
-
-document.getElementById("resultPercent")
-.innerText=
-Math.round(
-(acertos/perguntasAtuais.length)*100
-)+"%";
-
-mostrarTela("resultScreen");
-
-atualizarInterface();
-
-}
-
-
-/* =============================
-   VOLTAR AO MAPA
-============================= */
-
-function voltarMapa(){
-
-mostrarTela("dashboard");
-
-atualizarInterface();
+    mostrarTela("jornada");
 
 }
 
 </script>
 
 </body>
+
 </html>
