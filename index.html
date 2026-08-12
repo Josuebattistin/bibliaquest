@@ -1,293 +1,583 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>BíbliaQuest</title>
 
 <style>
+:root{
+    --bg:#06101d;
+    --bg2:#0b1b2c;
+    --card:#102438;
+    --card2:#142d43;
+    --gold:#f3d477;
+    --gold2:#c99b32;
+    --white:#ffffff;
+    --muted:#91a2b5;
+    --green:#45d483;
+    --red:#ff6673;
+    --blue:#4fa3ff;
+    --border:rgba(255,255,255,.09);
+    --shadow:0 20px 60px rgba(0,0,0,.28);
+}
 
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
 }
 
 body{
-    font-family:Arial,sans-serif;
-    min-height:100vh;
+    font-family:Inter,Arial,sans-serif;
     background:
-    radial-gradient(circle at 80% 10%,rgba(243,212,119,.12),transparent 30%),
-    linear-gradient(135deg,#07111f,#0d1b2a,#10253a);
-    color:white;
+        radial-gradient(circle at 15% 5%,rgba(243,212,119,.08),transparent 25%),
+        radial-gradient(circle at 90% 20%,rgba(79,163,255,.07),transparent 28%),
+        linear-gradient(135deg,var(--bg),var(--bg2));
+    color:var(--white);
+    min-height:100vh;
 }
 
-.container{
-    width:90%;
-    max-width:1050px;
+button{
+    font:inherit;
+}
+
+button,a{
+    -webkit-tap-highlight-color:transparent;
+}
+
+.app{
+    width:min(1180px,92%);
     margin:auto;
+}
+
+.screen{
+    display:none;
+    min-height:100vh;
+    padding:25px 0 70px;
+    animation:fade .3s ease;
+}
+
+.screen.active{
+    display:block;
+}
+
+@keyframes fade{
+    from{opacity:0;transform:translateY(8px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes pop{
+    0%{transform:scale(.85);opacity:0}
+    100%{transform:scale(1);opacity:1}
+}
+
+@keyframes xpFloat{
+    0%{transform:translateY(0);opacity:1}
+    100%{transform:translateY(-35px);opacity:0}
 }
 
 header{
     display:flex;
-    justify-content:space-between;
     align-items:center;
-    padding:22px 0;
+    justify-content:space-between;
+    padding:15px 0 30px;
 }
 
 .logo{
     display:flex;
     align-items:center;
-    gap:10px;
-    font-size:22px;
-    font-weight:bold;
+    gap:11px;
+    font-size:21px;
+    font-weight:800;
 }
 
 .logo-icon{
-    width:42px;
-    height:42px;
-    border-radius:12px;
+    width:43px;
+    height:43px;
+    border-radius:13px;
+    background:linear-gradient(135deg,var(--gold),var(--gold2));
+    color:#091321;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(135deg,#f3d477,#b88720);
-    color:#07111f;
     font-size:22px;
+    box-shadow:0 8px 25px rgba(243,212,119,.15);
 }
 
-.stats{
+.top-stats{
     display:flex;
-    gap:18px;
-    font-size:14px;
-    color:rgba(255,255,255,.8);
+    gap:8px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
 }
 
-.screen{
-    min-height:82vh;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:30px 0;
+.stat{
+    background:rgba(255,255,255,.05);
+    border:1px solid var(--border);
+    padding:8px 12px;
+    border-radius:12px;
+    font-size:13px;
 }
 
-.screen.active{
-    display:flex;
+.gold{
+    color:var(--gold);
+}
+
+.muted{
+    color:var(--muted);
 }
 
 .hero{
-    width:100%;
-    max-width:720px;
+    min-height:80vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     text-align:center;
 }
 
+.hero-inner{
+    max-width:760px;
+}
+
 .badge{
-    display:inline-block;
+    display:inline-flex;
     padding:9px 15px;
+    border:1px solid rgba(243,212,119,.18);
+    background:rgba(243,212,119,.06);
+    color:var(--gold);
     border-radius:30px;
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.12);
-    color:#f3d477;
-    font-size:13px;
+    font-size:12px;
+    font-weight:700;
     margin-bottom:25px;
 }
 
-h1{
-    font-size:clamp(44px,7vw,72px);
-    line-height:1;
+.hero h1{
+    font-size:clamp(45px,8vw,78px);
+    line-height:.98;
     margin-bottom:25px;
 }
 
-h1 span{
-    color:#f3d477;
+.hero h1 span{
+    color:var(--gold);
 }
 
-.subtitle{
+.hero p{
+    color:var(--muted);
     font-size:18px;
-    line-height:1.7;
-    color:rgba(255,255,255,.68);
-    margin-bottom:35px;
+    line-height:1.75;
+    margin-bottom:34px;
 }
 
-.button{
-    border:none;
-    padding:17px 30px;
+.primary{
+    border:0;
+    cursor:pointer;
+    padding:16px 27px;
     border-radius:14px;
-    background:linear-gradient(135deg,#f3d477,#c69a32);
+    background:linear-gradient(135deg,var(--gold),var(--gold2));
     color:#101820;
-    font-size:16px;
-    font-weight:bold;
-    cursor:pointer;
+    font-weight:800;
     transition:.2s;
+    box-shadow:0 12px 35px rgba(243,212,119,.12);
 }
 
-.button:hover{
+.primary:hover{
     transform:translateY(-2px);
-    box-shadow:0 12px 30px rgba(212,175,55,.25);
+    box-shadow:0 18px 40px rgba(243,212,119,.22);
 }
 
-.button.full{
-    width:100%;
+.primary:disabled{
+    cursor:not-allowed;
+    opacity:.4;
+    transform:none;
 }
 
-.level-container{
-    width:100%;
-    max-width:720px;
-}
-
-.back{
-    background:none;
-    border:none;
-    color:rgba(255,255,255,.6);
-    cursor:pointer;
-    margin-bottom:30px;
-    font-size:14px;
-}
-
-.level-title{
-    font-size:42px;
-    margin-bottom:12px;
-}
-
-.level-description{
-    color:rgba(255,255,255,.6);
-    font-size:17px;
-    margin-bottom:30px;
-    line-height:1.6;
-}
-
-.levels{
-    display:grid;
-    gap:14px;
-}
-
-.level-card{
-    width:100%;
-    padding:21px;
-    border-radius:18px;
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.1);
+.secondary{
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.04);
     color:white;
-    text-align:left;
+    padding:14px 20px;
+    border-radius:13px;
     cursor:pointer;
     transition:.2s;
 }
 
-.level-card:hover{
-    transform:translateY(-2px);
+.secondary:hover{
     background:rgba(255,255,255,.08);
 }
 
-.level-card.selected{
-    border:2px solid #f3d477;
-    background:rgba(243,212,119,.08);
-    box-shadow:0 0 30px rgba(243,212,119,.08);
+.back{
+    border:0;
+    background:none;
+    color:var(--muted);
+    cursor:pointer;
+    margin-bottom:25px;
 }
 
-.level-icon{
-    font-size:30px;
-    margin-bottom:9px;
+.section-title{
+    font-size:32px;
+    margin-bottom:8px;
 }
 
-.level-name{
-    font-size:18px;
-    font-weight:bold;
-    margin-bottom:6px;
+.section-subtitle{
+    color:var(--muted);
+    line-height:1.6;
+    margin-bottom:28px;
 }
 
-.level-text{
-    color:rgba(255,255,255,.55);
+.onboarding{
+    max-width:720px;
+    margin:60px auto;
+}
+
+.onboarding-card{
+    background:rgba(255,255,255,.045);
+    border:1px solid var(--border);
+    border-radius:25px;
+    padding:32px;
+    box-shadow:var(--shadow);
+}
+
+.options{
+    display:grid;
+    gap:13px;
+}
+
+.option{
+    width:100%;
+    text-align:left;
+    padding:21px;
+    background:rgba(255,255,255,.045);
+    border:1px solid var(--border);
+    border-radius:17px;
+    color:white;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.option:hover{
+    transform:translateY(-2px);
+    background:rgba(255,255,255,.07);
+}
+
+.option.selected{
+    border:2px solid var(--gold);
+    background:rgba(243,212,119,.07);
+}
+
+.option-icon{
+    font-size:27px;
+    margin-bottom:8px;
+}
+
+.option-title{
+    font-weight:800;
+    font-size:17px;
+    margin-bottom:5px;
+}
+
+.option-text{
+    color:var(--muted);
     font-size:14px;
     line-height:1.5;
 }
 
-.continue{
-    width:100%;
+.bottom-action{
     margin-top:22px;
-    opacity:.45;
-}
-
-.continue.ready{
-    opacity:1;
-}
-
-/* JORNADA */
-
-.journey{
     width:100%;
-    max-width:850px;
 }
 
-.journey-header{
+.home-grid{
+    display:grid;
+    grid-template-columns:1.5fr .9fr;
+    gap:20px;
+}
+
+.card{
+    background:rgba(255,255,255,.045);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:24px;
+    box-shadow:var(--shadow);
+}
+
+.welcome{
+    min-height:240px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.welcome h1{
+    font-size:40px;
+    margin-bottom:8px;
+}
+
+.welcome p{
+    color:var(--muted);
+    margin-bottom:25px;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin:20px 0;
+}
+
+.big-stat{
+    padding:18px;
+    border-radius:18px;
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--border);
+}
+
+.big-stat-icon{
+    font-size:23px;
+    margin-bottom:8px;
+}
+
+.big-stat-value{
+    font-size:23px;
+    font-weight:800;
+}
+
+.big-stat-label{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:4px;
+}
+
+.progress{
+    height:9px;
+    background:rgba(255,255,255,.08);
+    border-radius:30px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    background:linear-gradient(90deg,var(--gold),#fff0a9);
+    border-radius:30px;
+    transition:.4s;
+}
+
+.progress-info{
+    display:flex;
+    justify-content:space-between;
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:8px;
+}
+
+.continue-card{
+    margin-top:20px;
+}
+
+.continue-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:16px;
+}
+
+.continue-title h3{
+    font-size:20px;
+}
+
+.lesson-preview{
+    background:rgba(243,212,119,.05);
+    border:1px solid rgba(243,212,119,.12);
+    padding:18px;
+    border-radius:16px;
+    margin-bottom:16px;
+}
+
+.lesson-preview small{
+    color:var(--gold);
+}
+
+.lesson-preview h3{
+    margin:5px 0;
+}
+
+.lesson-preview p{
+    color:var(--muted);
+    font-size:14px;
+}
+
+.shortcuts{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.shortcut{
+    padding:18px;
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--border);
+    border-radius:17px;
+    color:white;
+    cursor:pointer;
+    text-align:left;
+    transition:.2s;
+}
+
+.shortcut:hover{
+    transform:translateY(-2px);
+}
+
+.shortcut-icon{
+    font-size:25px;
+    margin-bottom:8px;
+}
+
+.shortcut-title{
+    font-weight:800;
+}
+
+.shortcut-text{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:3px;
+}
+
+.map{
+    max-width:850px;
+    margin:auto;
+}
+
+.map-header{
     text-align:center;
     margin-bottom:35px;
 }
 
-.journey-header h2{
-    font-size:40px;
-    margin-bottom:10px;
+.map-header h1{
+    font-size:42px;
+    margin-bottom:7px;
 }
 
-.journey-header p{
-    color:rgba(255,255,255,.6);
+.journey-list{
+    position:relative;
 }
 
-.progress-box{
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.1);
-    padding:18px;
-    border-radius:18px;
-    margin-bottom:25px;
+.journey-list:before{
+    content:"";
+    position:absolute;
+    left:31px;
+    top:25px;
+    bottom:25px;
+    width:3px;
+    background:rgba(243,212,119,.15);
 }
 
-.progress-top{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:10px;
-    font-size:14px;
-}
-
-.progress-bar{
-    width:100%;
-    height:9px;
-    background:rgba(255,255,255,.1);
+.journey{
+    position:relative;
+    margin-bottom:18px;
+    padding:21px 21px 21px 72px;
+    background:rgba(255,255,255,.045);
+    border:1px solid var(--border);
     border-radius:20px;
-    overflow:hidden;
+    cursor:pointer;
+    transition:.2s;
 }
 
-.progress-fill{
-    width:18%;
-    height:100%;
-    background:linear-gradient(90deg,#f3d477,#c69a32);
-    border-radius:20px;
+.journey:hover{
+    transform:translateX(3px);
 }
 
-.path{
-    display:grid;
-    gap:16px;
+.journey.locked{
+    opacity:.48;
+    cursor:not-allowed;
 }
 
-.lesson{
-    display:flex;
-    align-items:center;
-    gap:18px;
-    padding:20px;
-    border-radius:20px;
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.1);
+.journey.completed{
+    border-color:rgba(69,212,131,.25);
 }
 
-.lesson-icon{
-    width:55px;
-    height:55px;
-    min-width:55px;
+.journey-node{
+    position:absolute;
+    left:15px;
+    top:21px;
+    width:35px;
+    height:35px;
     border-radius:50%;
+    background:#12283c;
+    border:2px solid var(--gold);
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:25px;
-    background:rgba(243,212,119,.12);
+    z-index:2;
+    font-size:13px;
+}
+
+.journey.completed .journey-node{
+    border-color:var(--green);
+}
+
+.journey.locked .journey-node{
+    border-color:#526171;
+}
+
+.journey-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.journey h3{
+    margin-bottom:5px;
+}
+
+.journey p{
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.5;
+    margin-bottom:12px;
+}
+
+.status{
+    font-size:11px;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.lesson-list{
+    display:grid;
+    gap:12px;
+}
+
+.lesson-item{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:18px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.04);
+    border-radius:17px;
+    cursor:pointer;
+}
+
+.lesson-item.locked{
+    opacity:.42;
+    cursor:not-allowed;
+}
+
+.lesson-item.completed{
+    border-color:rgba(69,212,131,.2);
+}
+
+.lesson-number{
+    width:39px;
+    height:39px;
+    flex:none;
+    border-radius:12px;
+    background:rgba(243,212,119,.08);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--gold);
+    font-weight:800;
 }
 
 .lesson-info{
@@ -295,910 +585,4545 @@ h1 span{
 }
 
 .lesson-info h3{
-    margin-bottom:5px;
+    font-size:16px;
+    margin-bottom:4px;
 }
 
 .lesson-info p{
-    color:rgba(255,255,255,.55);
-    font-size:14px;
+    color:var(--muted);
+    font-size:13px;
 }
 
-.lesson button{
-    border:none;
-    padding:11px 17px;
-    border-radius:10px;
-    background:#f3d477;
-    color:#101820;
-    font-weight:bold;
-    cursor:pointer;
+.lesson-state{
+    color:var(--gold);
 }
 
-.lesson.locked{
-    opacity:.45;
+.lesson-page{
+    max-width:780px;
+    margin:auto;
 }
 
-.lesson.locked button{
-    background:rgba(255,255,255,.1);
-    color:white;
-    cursor:not-allowed;
+.lesson-header{
+    margin-bottom:25px;
 }
 
-/* MISSÃO */
-
-.mission{
-    width:100%;
-    max-width:700px;
-    text-align:center;
+.lesson-header .tag{
+    color:var(--gold);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:8px;
 }
 
-.mission-badge{
-    color:#f3d477;
-    font-weight:bold;
-    margin-bottom:15px;
+.lesson-header h1{
+    font-size:39px;
+    margin-bottom:10px;
 }
 
-.mission h2{
-    font-size:40px;
-    margin-bottom:15px;
+.lesson-header p{
+    color:var(--muted);
+    line-height:1.65;
 }
 
-.mission-description{
-    color:rgba(255,255,255,.6);
-    line-height:1.6;
-    margin-bottom:30px;
+.learn-box{
+    background:linear-gradient(135deg,rgba(243,212,119,.08),rgba(255,255,255,.035));
+    border:1px solid rgba(243,212,119,.14);
+    padding:23px;
+    border-radius:20px;
+    margin-bottom:25px;
 }
 
-.mission-card{
-    padding:30px;
-    border-radius:24px;
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.1);
+.learn-box h3{
+    color:var(--gold);
+    margin-bottom:10px;
 }
 
-.verse{
-    font-size:22px;
-    line-height:1.6;
-    margin-bottom:12px;
-}
-
-.reference{
-    color:#f3d477;
-    font-weight:bold;
-}
-
-/* QUIZ */
-
-.quiz{
-    width:100%;
-    max-width:720px;
-}
-
-.quiz-top{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:18px;
-    color:rgba(255,255,255,.7);
-    font-size:14px;
+.learn-box p{
+    color:#dce5ed;
+    line-height:1.75;
 }
 
 .question-card{
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:24px;
-    padding:30px;
+    background:rgba(255,255,255,.045);
+    border:1px solid var(--border);
+    padding:25px;
+    border-radius:22px;
 }
 
-.question-card h2{
-    font-size:27px;
+.question-counter{
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+.question{
+    font-size:23px;
     line-height:1.4;
-    margin-bottom:25px;
+    margin-bottom:20px;
 }
 
 .answers{
     display:grid;
-    gap:12px;
+    gap:11px;
 }
 
 .answer{
-    padding:18px;
+    padding:16px;
     border-radius:14px;
-    border:1px solid rgba(255,255,255,.12);
+    border:1px solid var(--border);
     background:rgba(255,255,255,.04);
     color:white;
-    text-align:left;
     cursor:pointer;
-    font-size:15px;
+    text-align:left;
     transition:.2s;
 }
 
-.answer:hover{
+.answer:hover:not(:disabled){
     background:rgba(255,255,255,.08);
 }
 
 .answer.correct{
-    background:rgba(55,180,100,.18);
-    border-color:#55c477;
+    border-color:var(--green);
+    background:rgba(69,212,131,.1);
 }
 
 .answer.wrong{
-    background:rgba(220,70,70,.18);
-    border-color:#e07070;
+    border-color:var(--red);
+    background:rgba(255,102,115,.1);
 }
 
-/* RESULTADO */
-
-.result{
-    width:100%;
-    max-width:600px;
-    text-align:center;
+.answer:disabled{
+    cursor:default;
 }
 
-.result-icon{
-    font-size:70px;
-    margin-bottom:20px;
-}
-
-.result h2{
-    font-size:42px;
-    margin-bottom:15px;
-}
-
-.result p{
-    color:rgba(255,255,255,.65);
+.feedback{
+    margin-top:18px;
+    padding:16px;
+    border-radius:15px;
     line-height:1.6;
-    margin-bottom:25px;
+    display:none;
 }
 
-.xp{
-    display:inline-block;
-    padding:12px 22px;
-    border-radius:30px;
-    background:rgba(243,212,119,.1);
-    color:#f3d477;
-    font-weight:bold;
-    margin-bottom:30px;
+.feedback.show{
+    display:block;
+    animation:pop .2s ease;
 }
 
-.final-card{
-    padding:25px;
-    border-radius:20px;
-    background:rgba(255,255,255,.05);
-    margin-bottom:25px;
+.feedback.correct{
+    background:rgba(69,212,131,.08);
+    border:1px solid rgba(69,212,131,.18);
 }
 
-.final-card strong{
-    font-size:30px;
+.feedback.wrong{
+    background:rgba(255,102,115,.08);
+    border:1px solid rgba(255,102,115,.18);
+}
+
+.feedback strong{
     display:block;
     margin-bottom:5px;
 }
 
-/* MOBILE */
+.question-action{
+    margin-top:18px;
+    width:100%;
+}
 
-@media(max-width:600px){
+.complete-card{
+    text-align:center;
+    max-width:650px;
+    margin:70px auto;
+}
 
-    .stats{
-        gap:8px;
-        font-size:12px;
+.complete-icon{
+    width:80px;
+    height:80px;
+    border-radius:25px;
+    background:rgba(69,212,131,.1);
+    border:1px solid rgba(69,212,131,.2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 20px;
+    font-size:40px;
+}
+
+.complete-card h1{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.complete-card p{
+    color:var(--muted);
+    line-height:1.6;
+}
+
+.reward{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin:25px 0;
+    flex-wrap:wrap;
+}
+
+.reward span{
+    padding:11px 16px;
+    border-radius:12px;
+    background:rgba(243,212,119,.08);
+    border:1px solid rgba(243,212,119,.14);
+    color:var(--gold);
+}
+
+.challenge{
+    max-width:780px;
+    margin:auto;
+}
+
+.challenge-hero{
+    text-align:center;
+    padding:35px;
+    background:linear-gradient(135deg,rgba(243,212,119,.09),rgba(255,255,255,.035));
+    border:1px solid rgba(243,212,119,.16);
+    border-radius:25px;
+    margin-bottom:20px;
+}
+
+.challenge-hero .trophy{
+    font-size:50px;
+    margin-bottom:10px;
+}
+
+.challenge-question{
+    margin-bottom:15px;
+}
+
+.challenge-question h3{
+    margin-bottom:12px;
+}
+
+.profile{
+    max-width:900px;
+    margin:auto;
+}
+
+.profile-header{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    margin-bottom:25px;
+}
+
+.avatar{
+    width:78px;
+    height:78px;
+    border-radius:23px;
+    background:linear-gradient(135deg,var(--gold),var(--gold2));
+    color:#101820;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:32px;
+    font-weight:900;
+}
+
+.profile-header h1{
+    margin-bottom:5px;
+}
+
+.profile-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.achievement-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.achievement{
+    padding:20px;
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:rgba(255,255,255,.04);
+}
+
+.achievement.locked{
+    opacity:.32;
+    filter:grayscale(1);
+}
+
+.achievement-icon{
+    font-size:28px;
+    margin-bottom:10px;
+}
+
+.achievement h3{
+    font-size:16px;
+    margin-bottom:5px;
+}
+
+.achievement p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.5;
+}
+
+.empty{
+    text-align:center;
+    padding:40px;
+    color:var(--muted);
+}
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:999;
+    padding:15px 18px;
+    background:#142c40;
+    border:1px solid rgba(243,212,119,.2);
+    border-radius:15px;
+    box-shadow:var(--shadow);
+    transform:translateY(20px);
+    opacity:0;
+    pointer-events:none;
+    transition:.3s;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+.life-screen{
+    max-width:600px;
+    margin:80px auto;
+    text-align:center;
+}
+
+.life-big{
+    font-size:55px;
+    margin-bottom:20px;
+}
+
+.timer{
+    color:var(--gold);
+    margin:15px 0 25px;
+}
+
+@media(max-width:850px){
+    .home-grid{
+        grid-template-columns:1fr;
     }
 
-    .level-title,
-    .journey-header h2,
-    .mission h2,
-    .result h2{
+    .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+    .app{
+        width:92%;
+    }
+
+    .screen{
+        padding-top:12px;
+    }
+
+    header{
+        padding-bottom:20px;
+    }
+
+    .top-stats{
+        display:none;
+    }
+
+    .hero h1{
+        font-size:45px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+    .onboarding-card,
+    .card,
+    .question-card{
+        padding:19px;
+        border-radius:19px;
+    }
+
+    .section-title{
+        font-size:28px;
+    }
+
+    .welcome h1{
         font-size:32px;
     }
 
-    .question-card h2{
-        font-size:22px;
+    .stats-grid{
+        gap:8px;
     }
 
-    .lesson{
+    .big-stat{
+        padding:14px;
+    }
+
+    .journey{
+        padding-left:65px;
+    }
+
+    .lesson-header h1{
+        font-size:31px;
+    }
+
+    .question{
+        font-size:20px;
+    }
+
+    .profile-grid,
+    .achievement-grid{
+        grid-template-columns:1fr;
+    }
+
+    .profile-header{
         align-items:flex-start;
     }
-
-    .lesson button{
-        padding:9px 12px;
-    }
-
 }
-
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
+
+<!-- =========================
+     CABEÇALHO
+========================= -->
 
 <header>
-
     <div class="logo">
         <div class="logo-icon">✦</div>
         BíbliaQuest
     </div>
 
-    <div class="stats">
-        🔥 <span id="streak">0</span>
-        ⭐ <span id="xp">0</span> XP
-    </div>
-
+    <div class="top-stats" id="topStats"></div>
 </header>
 
 
-<!-- ================= INÍCIO ================= -->
+<!-- =========================
+     TELA INICIAL
+========================= -->
 
-<section id="home" class="screen active">
+<section id="screen-start" class="screen active">
 
-<div class="hero">
+    <div class="hero">
+        <div class="hero-inner">
 
-    <div class="badge">
-        ✦ UMA NOVA FORMA DE APRENDER A BÍBLIA
+            <div class="badge">
+                ✦ UMA NOVA FORMA DE APRENDER A BÍBLIA
+            </div>
+
+            <h1>
+                Sua jornada pela
+                <span>Bíblia começa aqui.</span>
+            </h1>
+
+            <p>
+                Aprenda, descubra e memorize a Palavra através
+                de jornadas interativas, desafios, conquistas
+                e progressão.
+            </p>
+
+            <button class="primary" onclick="startJourney()">
+                Começar minha jornada →
+            </button>
+
+        </div>
     </div>
-
-    <h1>
-        Sua jornada pela
-        <span>Bíblia começa aqui.</span>
-    </h1>
-
-    <p class="subtitle">
-        Aprenda, descubra e memorize a Palavra
-        através de jornadas interativas,
-        desafios, conquistas e um tutor
-        inteligente que acompanha sua evolução.
-    </p>
-
-    <button class="button" onclick="mostrarNivel()">
-        Começar minha jornada →
-    </button>
-
-</div>
 
 </section>
 
 
-<!-- ================= NÍVEL ================= -->
+<!-- =========================
+     NÍVEL
+========================= -->
 
-<section id="nivel" class="screen">
+<section id="screen-level" class="screen">
 
-<div class="level-container">
+    <div class="onboarding">
 
-<button class="back" onclick="mostrarTela('home')">
-    ← Voltar
-</button>
+        <button class="back" onclick="showScreen('start')">
+            ← Voltar
+        </button>
 
-<h2 class="level-title">
-    Antes de começar...
-</h2>
+        <div class="onboarding-card">
 
-<p class="level-description">
-    Queremos adaptar sua jornada ao seu
-    conhecimento atual da Bíblia.
-</p>
+            <h1 class="section-title">
+                Qual é o seu nível?
+            </h1>
 
-<div class="levels">
+            <p class="section-subtitle">
+                Vamos adaptar sua jornada ao seu conhecimento
+                atual da Bíblia.
+            </p>
 
-<button class="level-card" onclick="selecionarNivel(this)">
-    <div class="level-icon">🌱</div>
-    <div class="level-name">Estou começando</div>
-    <div class="level-text">
-        Quero conhecer a Bíblia desde o início.
+            <div class="options">
+
+                <button class="option" onclick="selectLevel(this,'iniciante')">
+                    <div class="option-icon">🌱</div>
+                    <div class="option-title">Estou começando</div>
+                    <div class="option-text">
+                        Quero conhecer a Bíblia desde o início.
+                    </div>
+                </button>
+
+                <button class="option" onclick="selectLevel(this,'intermediario')">
+                    <div class="option-icon">📖</div>
+                    <div class="option-title">Já conheço algumas coisas</div>
+                    <div class="option-text">
+                        Conheço histórias bíblicas, mas quero aprofundar.
+                    </div>
+                </button>
+
+                <button class="option" onclick="selectLevel(this,'avancado')">
+                    <div class="option-icon">🔥</div>
+                    <div class="option-title">Conheço bastante</div>
+                    <div class="option-text">
+                        Quero testar meus conhecimentos e avançar.
+                    </div>
+                </button>
+
+            </div>
+
+            <button id="levelContinue"
+                    class="primary bottom-action"
+                    disabled
+                    onclick="goToObjective()">
+                Continuar →
+            </button>
+
+        </div>
     </div>
-</button>
-
-<button class="level-card" onclick="selecionarNivel(this)">
-    <div class="level-icon">📖</div>
-    <div class="level-name">Já conheço algumas coisas</div>
-    <div class="level-text">
-        Conheço histórias bíblicas,
-        mas quero aprofundar.
-    </div>
-</button>
-
-<button class="level-card" onclick="selecionarNivel(this)">
-    <div class="level-icon">🔥</div>
-    <div class="level-name">Conheço bastante</div>
-    <div class="level-text">
-        Quero testar meus conhecimentos
-        e enfrentar desafios mais avançados.
-    </div>
-</button>
-
-</div>
-
-<button id="continueButton"
-class="button continue"
-onclick="continuarNivel()">
-    Continuar →
-</button>
-
-</div>
 
 </section>
 
 
-<!-- ================= OBJETIVO ================= -->
+<!-- =========================
+     OBJETIVO
+========================= -->
 
-<section id="objetivo" class="screen">
+<section id="screen-objective" class="screen">
 
-<div class="level-container">
+    <div class="onboarding">
 
-<button class="back" onclick="mostrarTela('nivel')">
-    ← Voltar
-</button>
+        <button class="back" onclick="showScreen('level')">
+            ← Voltar
+        </button>
 
-<h2 class="level-title">
-    Qual é o seu objetivo?
-</h2>
+        <div class="onboarding-card">
 
-<p class="level-description">
-    Escolha o que você mais deseja alcançar
-    durante sua jornada no BíbliaQuest.
-</p>
+            <h1 class="section-title">
+                Qual é o seu objetivo?
+            </h1>
 
-<div class="levels">
+            <p class="section-subtitle">
+                Escolha o principal motivo pelo qual você quer
+                estudar a Bíblia.
+            </p>
 
-<button class="level-card objetivo-card"
-onclick="selecionarObjetivo(this)">
-    <div class="level-icon">📖</div>
-    <div class="level-name">
-        Conhecer melhor a Bíblia
+            <div class="options">
+
+                <button class="option"
+                        onclick="selectObjective(this,'conhecer')">
+                    <div class="option-icon">📖</div>
+                    <div class="option-title">
+                        Conhecer melhor a Bíblia
+                    </div>
+                    <div class="option-text">
+                        Quero entender as histórias e ensinamentos.
+                    </div>
+                </button>
+
+                <button class="option"
+                        onclick="selectObjective(this,'memorizar')">
+                    <div class="option-icon">🧠</div>
+                    <div class="option-title">
+                        Memorizar a Palavra
+                    </div>
+                    <div class="option-text">
+                        Quero guardar versículos e ensinamentos.
+                    </div>
+                </button>
+
+                <button class="option"
+                        onclick="selectObjective(this,'aprofundar')">
+                    <div class="option-icon">🔥</div>
+                    <div class="option-title">
+                        Aprofundar meus estudos
+                    </div>
+                    <div class="option-text">
+                        Quero ir além do conhecimento básico.
+                    </div>
+                </button>
+
+                <button class="option"
+                        onclick="selectObjective(this,'constancia')">
+                    <div class="option-icon">📅</div>
+                    <div class="option-title">
+                        Criar constância
+                    </div>
+                    <div class="option-text">
+                        Quero criar o hábito de estudar todos os dias.
+                    </div>
+                </button>
+
+            </div>
+
+            <button id="objectiveContinue"
+                    class="primary bottom-action"
+                    disabled
+                    onclick="finishOnboarding()">
+                Continuar →
+            </button>
+
+        </div>
     </div>
-    <div class="level-text">
-        Quero entender histórias,
-        personagens e ensinamentos das Escrituras.
-    </div>
-</button>
-
-<button class="level-card objetivo-card"
-onclick="selecionarObjetivo(this)">
-    <div class="level-icon">🧠</div>
-    <div class="level-name">
-        Memorizar versículos
-    </div>
-    <div class="level-text">
-        Quero guardar a Palavra de Deus
-        no meu coração.
-    </div>
-</button>
-
-<button class="level-card objetivo-card"
-onclick="selecionarObjetivo(this)">
-    <div class="level-icon">🔥</div>
-    <div class="level-name">
-        Fortalecer minha fé
-    </div>
-    <div class="level-text">
-        Quero desenvolver uma vida
-        espiritual mais próxima de Deus.
-    </div>
-</button>
-
-<button class="level-card objetivo-card"
-onclick="selecionarObjetivo(this)">
-    <div class="level-icon">🏆</div>
-    <div class="level-name">
-        Testar meus conhecimentos
-    </div>
-    <div class="level-text">
-        Quero responder desafios
-        e provar o quanto conheço a Bíblia.
-    </div>
-</button>
-
-</div>
-
-<button id="objectiveContinue"
-class="button continue"
-onclick="continuarObjetivo()">
-    Continuar →
-</button>
-
-</div>
 
 </section>
 
 
-<!-- ================= JORNADA ================= -->
+<!-- =========================
+     HOME
+========================= -->
 
-<section id="jornada" class="screen">
+<section id="screen-home" class="screen">
 
-<div class="journey">
+    <div class="home-grid">
 
-<div class="journey-header">
+        <div>
 
-<h2>
-    Sua jornada começou! 🚀
-</h2>
+            <div class="card welcome">
 
-<p>
-    Construa seu conhecimento bíblico uma missão de cada vez.
-</p>
+                <div class="muted">BÍBLIAQUEST</div>
 
-</div>
+                <h1>
+                    Olá! 👋
+                </h1>
 
-<div class="progress-box">
+                <p>
+                    Vamos continuar sua jornada?
+                </p>
 
-<div class="progress-top">
-<span>Progresso da jornada</span>
-<strong>18%</strong>
-</div>
+                <button class="primary" onclick="continueJourney()">
+                    Continuar jornada →
+                </button>
 
-<div class="progress-bar">
-<div class="progress-fill"></div>
-</div>
+            </div>
 
-</div>
+            <div class="stats-grid">
 
-<div class="path">
+                <div class="big-stat">
+                    <div class="big-stat-icon">🔥</div>
+                    <div class="big-stat-value" id="homeStreak">0</div>
+                    <div class="big-stat-label">dias seguidos</div>
+                </div>
 
-<div class="lesson">
+                <div class="big-stat">
+                    <div class="big-stat-icon">⭐</div>
+                    <div class="big-stat-value" id="homeXP">0</div>
+                    <div class="big-stat-label">XP</div>
+                </div>
 
-<div class="lesson-icon">📖</div>
+                <div class="big-stat">
+                    <div class="big-stat-icon">❤️</div>
+                    <div class="big-stat-value" id="homeLives">5</div>
+                    <div class="big-stat-label">vidas</div>
+                </div>
 
-<div class="lesson-info">
-<h3>Missão 1 — O começo de tudo</h3>
-<p>
-Descubra como a Bíblia começa e conheça
-a história da criação.
-</p>
-</div>
+                <div class="big-stat">
+                    <div class="big-stat-icon">🪙</div>
+                    <div class="big-stat-value" id="homeCoins">0</div>
+                    <div class="big-stat-label">moedas</div>
+                </div>
 
-<button onclick="abrirMissao()">
-Começar
-</button>
+            </div>
 
-</div>
+            <div class="card continue-card">
 
+                <div class="continue-title">
+                    <h3>Continue aprendendo</h3>
+                    <span class="gold" id="homeLevel">
+                        Nível 1
+                    </span>
+                </div>
 
-<div class="lesson locked">
+                <div class="lesson-preview">
 
-<div class="lesson-icon">🌊</div>
+                    <small>GÊNESIS • JORNADA 1</small>
 
-<div class="lesson-info">
-<h3>Missão 2 — Noé e o dilúvio</h3>
-<p>
-Conheça uma das histórias mais marcantes
-do livro de Gênesis.
-</p>
-</div>
+                    <h3>A Criação</h3>
 
-<button disabled>
-🔒
-</button>
+                    <p id="homeLessonText">
+                        Comece sua primeira lição.
+                    </p>
 
-</div>
+                </div>
 
+                <div class="progress-info">
+                    <span id="homeProgressText">
+                        0/7 lições
+                    </span>
+                    <span id="homeProgressPercent">
+                        0%
+                    </span>
+                </div>
 
-<div class="lesson locked">
+                <div class="progress">
+                    <div id="homeProgressBar"
+                         class="progress-bar"
+                         style="width:0%">
+                    </div>
+                </div>
 
-<div class="lesson-icon">⭐</div>
+            </div>
 
-<div class="lesson-info">
-<h3>Missão 3 — A promessa de Deus</h3>
-<p>
-Conheça a história de Abraão e sua fé.
-</p>
-</div>
-
-<button disabled>
-🔒
-</button>
-
-</div>
+        </div>
 
 
-<div class="lesson locked">
+        <div>
 
-<div class="lesson-icon">🔥</div>
+            <div class="card">
 
-<div class="lesson-info">
-<h3>Missão 4 — O chamado</h3>
-<p>
-Uma nova etapa da sua jornada bíblica.
-</p>
-</div>
+                <h3 style="margin-bottom:15px">
+                    Explorar
+                </h3>
 
-<button disabled>
-🔒
-</button>
+                <div class="shortcuts">
 
-</div>
+                    <button class="shortcut"
+                            onclick="showScreen('map')">
+                        <div class="shortcut-icon">🗺️</div>
+                        <div class="shortcut-title">
+                            Jornadas
+                        </div>
+                        <div class="shortcut-text">
+                            Continue sua jornada
+                        </div>
+                    </button>
 
-</div>
+                    <button class="shortcut"
+                            onclick="showBible()">
+                        <div class="shortcut-icon">📖</div>
+                        <div class="shortcut-title">
+                            Bíblia
+                        </div>
+                        <div class="shortcut-text">
+                            Livros da Bíblia
+                        </div>
+                    </button>
 
-</div>
+                    <button class="shortcut"
+                            onclick="showScreen('achievements')">
+                        <div class="shortcut-icon">🏆</div>
+                        <div class="shortcut-title">
+                            Conquistas
+                        </div>
+                        <div class="shortcut-text">
+                            Veja seus troféus
+                        </div>
+                    </button>
+
+                    <button class="shortcut"
+                            onclick="showProfile()">
+                        <div class="shortcut-icon">👤</div>
+                        <div class="shortcut-title">
+                            Perfil
+                        </div>
+                        <div class="shortcut-text">
+                            Sua evolução
+                        </div>
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="card" style="margin-top:20px">
+
+                <div class="progress-info">
+                    <span>Seu nível</span>
+                    <span id="levelName">Explorador</span>
+                </div>
+
+                <div class="progress">
+                    <div id="levelProgress"
+                         class="progress-bar"
+                         style="width:0%">
+                    </div>
+                </div>
+
+                <div style="margin-top:10px"
+                     class="muted"
+                     id="levelXPText">
+                    0 XP
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </section>
 
 
-<!-- ================= MISSÃO ================= -->
+<!-- =========================
+     MAPA
+========================= -->
 
-<section id="missao" class="screen">
+<section id="screen-map" class="screen">
 
-<div class="mission">
+    <div class="map">
 
-<div class="mission-badge">
-MISSÃO 1 • O COMEÇO DE TUDO
-</div>
+        <button class="back" onclick="showScreen('home')">
+            ← Voltar
+        </button>
 
-<h2>
-A criação
-</h2>
+        <div class="map-header">
 
-<p class="mission-description">
-Antes de responder à primeira pergunta,
-vamos conhecer o texto bíblico.
-</p>
+            <div class="gold">
+                ANTIGO TESTAMENTO
+            </div>
 
-<div class="mission-card">
+            <h1>Gênesis</h1>
 
-<div class="verse">
-“No princípio, criou Deus os céus e a terra.”
-</div>
+            <p class="muted">
+                Sua jornada começa no princípio.
+            </p>
 
-<div class="reference">
-Gênesis 1:1
-</div>
+        </div>
 
-</div>
+        <div id="journeyList" class="journey-list"></div>
 
-<br>
-
-<button class="button full" onclick="abrirQuiz()">
-Começar desafio →
-</button>
-
-</div>
+    </div>
 
 </section>
 
 
-<!-- ================= QUIZ ================= -->
+<!-- =========================
+     JORNADA
+========================= -->
 
-<section id="quiz" class="screen">
+<section id="screen-journey" class="screen">
 
-<div class="quiz">
+    <div class="map">
 
-<div class="quiz-top">
+        <button class="back" onclick="showScreen('map')">
+            ← Voltar
+        </button>
 
-<span>Questão 1 de 3</span>
+        <div id="journeyDetails"></div>
 
-<span>❤️ ❤️ ❤️</span>
-
-</div>
-
-<div class="progress-bar">
-<div id="quizProgress"
-class="progress-fill"
-style="width:33%">
-</div>
-</div>
-
-<br>
-
-<div class="question-card">
-
-<h2>
-Segundo Gênesis 1:1,
-o que Deus criou no princípio?
-</h2>
-
-<div class="answers">
-
-<button class="answer"
-onclick="responder(this,false)">
-Apenas a humanidade
-</button>
-
-<button class="answer"
-onclick="responder(this,true)">
-Os céus e a terra
-</button>
-
-<button class="answer"
-onclick="responder(this,false)">
-Somente os animais
-</button>
-
-<button class="answer"
-onclick="responder(this,false)">
-Apenas o mar
-</button>
-
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-<!-- ================= RESULTADO ================= -->
+<!-- =========================
+     LIÇÃO
+========================= -->
 
-<section id="resultado" class="screen">
+<section id="screen-lesson" class="screen">
 
-<div class="result">
+    <div class="lesson-page">
 
-<div id="resultIcon"
-class="result-icon">
-🎉
-</div>
+        <button class="back" onclick="backFromLesson()">
+            ← Voltar
+        </button>
 
-<h2 id="resultTitle">
-Muito bem!
-</h2>
+        <div id="lessonContent"></div>
 
-<p id="resultText">
-Você completou sua primeira pergunta
-da jornada BíbliaQuest.
-</p>
-
-<div class="xp">
-+10 XP ⭐
-</div>
-
-<div class="final-card">
-
-<strong id="totalXP">
-10 XP
-</strong>
-
-<span>
-Seu conhecimento está crescendo.
-</span>
-
-</div>
-
-<button class="button full"
-onclick="voltarJornada()">
-Continuar jornada →
-</button>
-
-</div>
+    </div>
 
 </section>
 
+
+<!-- =========================
+     CONCLUSÃO
+========================= -->
+
+<section id="screen-complete" class="screen">
+
+    <div id="completeContent"></div>
+
+</section>
+
+
+<!-- =========================
+     DESAFIO
+========================= -->
+
+<section id="screen-challenge" class="screen">
+
+    <div class="challenge">
+
+        <button class="back" onclick="showScreen('journey')">
+            ← Voltar
+        </button>
+
+        <div id="challengeContent"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     SEM VIDAS
+========================= -->
+
+<section id="screen-no-lives" class="screen">
+
+    <div class="life-screen">
+
+        <div class="life-big">
+            ❤️
+        </div>
+
+        <h1>
+            Suas vidas acabaram
+        </h1>
+
+        <p class="section-subtitle">
+            Você pode continuar assim que recuperar uma vida.
+            Por enquanto, use a recuperação gratuita.
+        </p>
+
+        <div class="timer" id="lifeTimer">
+            Recuperação disponível
+        </div>
+
+        <button class="primary"
+                onclick="recoverLife()">
+            Recuperar 1 vida
+        </button>
+
+        <br><br>
+
+        <button class="secondary"
+                onclick="showScreen('home')">
+            Voltar para Home
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PERFIL
+========================= -->
+
+<section id="screen-profile" class="screen">
+
+    <div class="profile">
+
+        <button class="back" onclick="showScreen('home')">
+            ← Voltar
+        </button>
+
+        <div id="profileContent"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CONQUISTAS
+========================= -->
+
+<section id="screen-achievements" class="screen">
+
+    <div class="profile">
+
+        <button class="back" onclick="showScreen('home')">
+            ← Voltar
+        </button>
+
+        <h1 class="section-title">
+            🏆 Conquistas
+        </h1>
+
+        <p class="section-subtitle">
+            Cada conquista representa uma parte da sua jornada.
+        </p>
+
+        <div id="achievementContent"
+             class="achievement-grid">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     BÍBLIA
+========================= -->
+
+<section id="screen-bible" class="screen">
+
+    <div class="profile">
+
+        <button class="back" onclick="showScreen('home')">
+            ← Voltar
+        </button>
+
+        <h1 class="section-title">
+            📖 Bíblia
+        </h1>
+
+        <p class="section-subtitle">
+            Explore a estrutura dos livros bíblicos.
+        </p>
+
+        <div class="card">
+
+            <h3 class="gold">
+                ANTIGO TESTAMENTO
+            </h3>
+
+            <p class="muted"
+               style="margin:10px 0 20px">
+                Gênesis é o primeiro livro disponível no BíbliaQuest.
+            </p>
+
+            <div id="oldTestament"></div>
+
+        </div>
+
+        <div class="card" style="margin-top:20px">
+
+            <h3 class="gold">
+                NOVO TESTAMENTO
+            </h3>
+
+            <p class="muted"
+               style="margin-top:10px">
+                Novos livros serão liberados conforme o desenvolvimento
+                do BíbliaQuest.
+            </p>
+
+            <div id="newTestament"
+                 style="margin-top:20px">
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
 </div>
+
+<div id="toast" class="toast"></div>
 
 
 <script>
 
-let nivelEscolhido = "";
-let objetivoEscolhido = "";
-let xpAtual = 0;
-let perguntaRespondida = false;
+/* =========================================================
+   CONFIGURAÇÃO
+========================================================= */
+
+const STORAGE_KEY = "bibliaquest_v3";
+
+const NIVEL_NOMES = [
+    "Explorador",
+    "Aprendiz",
+    "Discípulo",
+    "Estudioso",
+    "Conhecedor",
+    "Mestre das Escrituras"
+];
+
+const NIVEL_XP = [
+    0,
+    100,
+    300,
+    600,
+    1000,
+    1500
+];
+
+const LIVROS_AT = [
+"Gênesis","Êxodo","Levítico","Números","Deuteronômio",
+"Josué","Juízes","Rute","1 Samuel","2 Samuel","1 Reis",
+"2 Reis","1 Crônicas","2 Crônicas","Esdras","Neemias",
+"Ester","Jó","Salmos","Provérbios","Eclesiastes","Cânticos",
+"Isaías","Jeremias","Lamentações","Ezequiel","Daniel",
+"Oseias","Joel","Amós","Obadias","Jonas","Miqueias",
+"Naum","Habacuque","Sofonias","Ageu","Zacarias","Malaquias"
+];
+
+const LIVROS_NT = [
+"Mateus","Marcos","Lucas","João","Atos","Romanos",
+"1 Coríntios","2 Coríntios","Gálatas","Efésios",
+"Filipenses","Colossenses","1 Tessalonicenses",
+"2 Tessalonicenses","1 Timóteo","2 Timóteo","Tito",
+"Filemom","Hebreus","Tiago","1 Pedro","2 Pedro",
+"1 João","2 João","3 João","Judas","Apocalipse"
+];
 
 
-/* ================= CONTROLE DE TELAS ================= */
+/* =========================================================
+   DADOS DAS JORNADAS
+========================================================= */
 
-function mostrarTela(id){
+const jornadas = [
+
+{
+    id:1,
+    titulo:"A Criação",
+    descricao:"Descubra como Gênesis apresenta o princípio de todas as coisas.",
+    licoes:[
+        {
+            id:101,
+            titulo:"No princípio",
+            introducao:"Tudo começa com as primeiras palavras de Gênesis.",
+            conteudo:"Gênesis 1 apresenta Deus criando os céus e a terra. O relato começa mostrando a terra sem forma e vazia e apresenta Deus como aquele que dá ordem à criação.",
+            perguntas:[
+                {
+                    pergunta:"Qual é o primeiro livro da Bíblia?",
+                    opcoes:["Êxodo","Gênesis","Salmos","Mateus"],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis é o primeiro livro da Bíblia e inicia o Antigo Testamento."
+                },
+                {
+                    pergunta:"O que Gênesis 1 apresenta?",
+                    opcoes:["A construção do templo","A criação","O nascimento de Moisés","O exílio"],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 1 apresenta o relato da criação."
+                },
+                {
+                    pergunta:"Como a terra é descrita no início de Gênesis 1?",
+                    opcoes:["Cheia de cidades","Sem forma e vazia","Coberta por templos","Cheia de animais"],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 1:2 descreve a terra como sem forma e vazia."
+                }
+            ]
+        },
+
+        {
+            id:102,
+            titulo:"A criação da luz",
+            introducao:"O primeiro comando registrado na sequência da criação envolve a luz.",
+            conteudo:"Em Gênesis 1, Deus diz: 'Haja luz'. A luz aparece, e Deus vê que ela é boa. O texto então apresenta a separação entre luz e trevas.",
+            perguntas:[
+                {
+                    pergunta:"O que Deus disse para que houvesse luz?",
+                    opcoes:["Que aparecesse o sol","Haja luz","Que venha o dia","Que brilhe a lua"],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 1:3 registra a ordem: 'Haja luz'."
+                },
+                {
+                    pergunta:"O que Deus fez com a luz e as trevas?",
+                    opcoes:["Misturou as duas","Separou-as","Destruiu as duas","Ignorou-as"],
+                    respostaCorreta:1,
+                    explicacao:"O relato apresenta Deus separando a luz das trevas."
+                },
+                {
+                    pergunta:"Como Deus avaliou a luz?",
+                    opcoes:["Como ruim","Como inútil","Como boa","Como desconhecida"],
+                    respostaCorreta:2,
+                    explicacao:"Gênesis 1 registra que Deus viu que a luz era boa."
+                }
+            ]
+        },
+
+        {
+            id:103,
+            titulo:"Céus, terra e mares",
+            introducao:"A criação continua com a organização das águas e da terra.",
+            conteudo:"Gênesis apresenta a separação das águas e o surgimento da porção seca, chamada terra. As águas reunidas recebem o nome de mares.",
+            perguntas:[
+                {
+                    pergunta:"O que apareceu quando as águas foram reunidas?",
+                    opcoes:["A porção seca","Um templo","Uma cidade","Uma montanha de ouro"],
+                    respostaCorreta:0,
+                    explicacao:"O texto apresenta o surgimento da porção seca."
+                },
+                {
+                    pergunta:"Como foram chamadas as águas reunidas?",
+                    opcoes:["Rios","Lagos","Mares","Fontes"],
+                    respostaCorreta:2,
+                    explicacao:"Gênesis 1:10 chama as águas reunidas de mares."
+                },
+                {
+                    pergunta:"O que Deus viu ao observar a criação?",
+                    opcoes:["Que era boa","Que estava incompleta","Que era inútil","Que precisava ser destruída"],
+                    respostaCorreta:0,
+                    explicacao:"O relato repete que Deus viu que sua criação era boa."
+                }
+            ]
+        },
+
+        {
+            id:104,
+            titulo:"Sol, lua e estrelas",
+            introducao:"Os luminares passam a marcar tempos e estações.",
+            conteudo:"Gênesis 1 apresenta os luminares no céu para separar o dia da noite e servir como sinais para tempos determinados, dias e anos.",
+            perguntas:[
+                {
+                    pergunta:"Para que os luminares também serviriam?",
+                    opcoes:["Para construir casas","Para sinais e estações","Para alimentar animais","Para criar rios"],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 1:14 fala sobre sinais, estações, dias e anos."
+                },
+                {
+                    pergunta:"Qual período os luminares ajudariam a distinguir?",
+                    opcoes:["Dia e noite","Verão e inverno apenas","Mar e terra","Norte e sul"],
+                    respostaCorreta:0,
+                    explicacao:"Eles serviriam para separar o dia da noite."
+                },
+                {
+                    pergunta:"Onde os luminares foram colocados?",
+                    opcoes:["No mar","No firmamento dos céus","No jardim","Debaixo da terra"],
+                    respostaCorreta:1,
+                    explicacao:"O texto apresenta os luminares no firmamento dos céus."
+                }
+            ]
+        },
+
+        {
+            id:105,
+            titulo:"Animais e vida",
+            introducao:"A criação recebe grande diversidade de seres vivos.",
+            conteudo:"Gênesis 1 descreve a criação de seres viventes nas águas e de aves nos céus, além dos animais da terra.",
+            perguntas:[
+                {
+                    pergunta:"O que foi criado nas águas?",
+                    opcoes:["Seres viventes","Cidades","Templos","Montanhas"],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis apresenta seres viventes nas águas."
+                },
+                {
+                    pergunta:"O que voaria sobre a terra?",
+                    opcoes:["Peixes","Aves","Répteis apenas","Árvores"],
+                    respostaCorreta:1,
+                    explicacao:"As aves são apresentadas voando sobre a terra."
+                },
+                {
+                    pergunta:"O que Deus fez após criar os animais?",
+                    opcoes:["Abençoou-os","Destruiu-os","Escondeu-os","Prendeu-os"],
+                    respostaCorreta:0,
+                    explicacao:"O relato apresenta Deus abençoando os seres vivos."
+                }
+            ]
+        },
+
+        {
+            id:106,
+            titulo:"A criação do ser humano",
+            introducao:"O relato chega a um momento especial da criação.",
+            conteudo:"Gênesis 1 apresenta o ser humano sendo criado à imagem e semelhança de Deus, homem e mulher.",
+            perguntas:[
+                {
+                    pergunta:"À imagem de quem o ser humano foi criado?",
+                    opcoes:["Dos anjos","Dos animais","De Deus","Dos reis"],
+                    respostaCorreta:2,
+                    explicacao:"Gênesis 1:27 afirma que Deus criou o ser humano à sua imagem."
+                },
+                {
+                    pergunta:"Como Gênesis apresenta homem e mulher?",
+                    opcoes:["Como duas criações separadas sem relação","Como parte da criação humana","Como anjos","Como reis celestiais"],
+                    respostaCorreta:1,
+                    explicacao:"O texto apresenta homem e mulher dentro da criação da humanidade."
+                },
+                {
+                    pergunta:"O que Deus fez ao observar toda a criação?",
+                    opcoes:["Viu que era muito boa","Disse que era inútil","Destruiu tudo","Abandonou a criação"],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 1:31 registra que Deus viu que tudo era muito bom."
+                }
+            ]
+        },
+
+        {
+            id:107,
+            titulo:"O descanso de Deus",
+            introducao:"O primeiro relato da criação termina com descanso.",
+            conteudo:"Gênesis 2 apresenta o sétimo dia como um dia de descanso após a obra da criação.",
+            perguntas:[
+                {
+                    pergunta:"Qual dia é apresentado como o dia de descanso?",
+                    opcoes:["Primeiro","Terceiro","Sexto","Sétimo"],
+                    respostaCorreta:3,
+                    explicacao:"Gênesis 2 apresenta o sétimo dia como o dia em que Deus descansou."
+                },
+                {
+                    pergunta:"O que Deus havia terminado?",
+                    opcoes:["A arca","A criação","O templo","A cidade"],
+                    respostaCorreta:1,
+                    explicacao:"O texto diz que Deus terminou a obra que havia feito."
+                },
+                {
+                    pergunta:"O que Deus fez com o sétimo dia?",
+                    opcoes:["Abandonou","Abençoou e santificou","Escondeu","Destruiu"],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 2:3 apresenta Deus abençoando e santificando o sétimo dia."
+                }
+            ]
+        }
+    ],
+
+    desafio:[
+        {
+            pergunta:"Qual sequência representa melhor o início do relato de Gênesis?",
+            opcoes:[
+                "Criação → luz → organização das águas → luminares → seres vivos → humanidade",
+                "Abraão → Noé → criação → Moisés",
+                "Êxodo → criação → Abraão → Éden",
+                "Davi → criação → Noé → Abraão"
+            ],
+            respostaCorreta:0,
+            explicacao:"Essa é a sequência apresentada no relato de Gênesis 1."
+        },
+        {
+            pergunta:"O que diferencia a criação do ser humano no relato de Gênesis 1?",
+            opcoes:[
+                "Foi criado como um animal comum",
+                "Foi criado à imagem e semelhança de Deus",
+                "Foi criado antes da luz",
+                "Foi criado depois de Abraão"
+            ],
+            respostaCorreta:1,
+            explicacao:"Gênesis 1:26-27 apresenta o ser humano como criado à imagem de Deus."
+        },
+        {
+            pergunta:"Qual dia encerra a sequência da criação?",
+            opcoes:["Quinto","Sexto","Sétimo","Oitavo"],
+            respostaCorreta:2,
+            explicacao:"O sétimo dia é apresentado como dia de descanso."
+        }
+    ]
+},
+
+{
+    id:2,
+    titulo:"O Jardim do Éden",
+    descricao:"Conheça o jardim, Adão, Eva e os acontecimentos que marcaram o Éden.",
+    licoes:[
+        {
+            id:201,
+            titulo:"Adão no jardim",
+            introducao:"Gênesis 2 apresenta detalhes sobre o ser humano e o jardim.",
+            conteudo:"O relato mostra Deus colocando o homem no jardim do Éden para o cultivar e guardar.",
+            perguntas:[
+                {
+                    pergunta:"Onde Deus colocou o homem?",
+                    opcoes:["No Egito","No jardim do Éden","Em Babel","Em Canaã"],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 2 apresenta o jardim do Éden como o lugar onde o homem foi colocado."
+                },
+                {
+                    pergunta:"Qual tarefa foi dada ao homem?",
+                    opcoes:["Cultivar e guardar o jardim","Construir uma arca","Governar o Egito","Construir uma torre"],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 2:15 fala sobre cultivar e guardar o jardim."
+                },
+                {
+                    pergunta:"O que havia no jardim?",
+                    opcoes:["Árvores agradáveis e boas para alimento","Somente areia","Somente animais","Uma cidade"],
+                    respostaCorreta:0,
+                    explicacao:"O texto apresenta árvores agradáveis à vista e boas para alimento."
+                }
+            ]
+        },
+
+        {
+            id:202,
+            titulo:"Eva",
+            introducao:"O relato apresenta a criação da mulher.",
+            conteudo:"Gênesis 2 descreve a mulher sendo formada para estar com o homem.",
+            perguntas:[
+                {
+                    pergunta:"Por que Deus fez a mulher?",
+                    opcoes:[
+                        "Porque não era bom que o homem estivesse só",
+                        "Para construir a arca",
+                        "Para governar o Egito",
+                        "Para criar os animais"
+                    ],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 2:18 apresenta a necessidade de uma auxiliadora adequada."
+                },
+                {
+                    pergunta:"De onde a mulher foi formada no relato?",
+                    opcoes:["Do barro da cidade","Da costela do homem","Do mar","De uma árvore"],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 2:21-22 descreve a formação da mulher a partir da costela do homem."
+                },
+                {
+                    pergunta:"Como o homem recebeu a mulher?",
+                    opcoes:["Como inimiga","Como parte de sua própria realidade humana","Como rainha do Egito","Como profetisa"],
+                    respostaCorreta:1,
+                    explicacao:"O relato mostra uma relação de união entre homem e mulher."
+                }
+            ]
+        },
+
+        {
+            id:203,
+            titulo:"A árvore do conhecimento",
+            introducao:"No jardim havia uma ordem específica.",
+            conteudo:"Deus permitiu que o homem comesse das árvores do jardim, mas deu uma ordem relacionada à árvore do conhecimento do bem e do mal.",
+            perguntas:[
+                {
+                    pergunta:"De qual árvore havia uma proibição?",
+                    opcoes:[
+                        "Árvore da vida",
+                        "Árvore do conhecimento do bem e do mal",
+                        "Árvore das águas",
+                        "Árvore dos céus"
+                    ],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 2:17 apresenta essa árvore especificamente."
+                },
+                {
+                    pergunta:"O que Deus havia permitido inicialmente?",
+                    opcoes:[
+                        "Comer das árvores do jardim, com a exceção indicada",
+                        "Comer somente uma árvore",
+                        "Sair do jardim",
+                        "Construir uma cidade"
+                    ],
+                    respostaCorreta:0,
+                    explicacao:"A ordem permitia comer das árvores do jardim, com uma proibição específica."
+                },
+                {
+                    pergunta:"Qual era o nome do jardim?",
+                    opcoes:["Getsêmani","Éden","Sião","Carmelo"],
+                    respostaCorreta:1,
+                    explicacao:"O jardim é chamado de Éden."
+                }
+            ]
+        },
+
+        {
+            id:204,
+            titulo:"A serpente",
+            introducao:"Gênesis 3 introduz a serpente no relato da queda.",
+            conteudo:"A serpente questiona a palavra de Deus e conversa com a mulher sobre a ordem relacionada à árvore.",
+            perguntas:[
+                {
+                    pergunta:"Quem questionou a mulher sobre a ordem de Deus?",
+                    opcoes:["Um anjo","A serpente","Noé","Abraão"],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 3 apresenta a serpente conversando com a mulher."
+                },
+                {
+                    pergunta:"Sobre o que a serpente questionou?",
+                    opcoes:["A ordem de Deus","A construção da arca","O nome de Abraão","A criação dos animais"],
+                    respostaCorreta:0,
+                    explicacao:"A conversa envolve diretamente a ordem dada por Deus."
+                },
+                {
+                    pergunta:"O que estava no centro da tentação?",
+                    opcoes:[
+                        "A árvore do conhecimento do bem e do mal",
+                        "A arca",
+                        "O monte Sinai",
+                        "O templo"
+                    ],
+                    respostaCorreta:0,
+                    explicacao:"A narrativa de Gênesis 3 gira em torno dessa árvore."
+                }
+            ]
+        },
+
+        {
+            id:205,
+            titulo:"A queda",
+            introducao:"A desobediência muda a situação do homem e da mulher.",
+            conteudo:"Gênesis 3 apresenta a mulher tomando do fruto e comendo, e depois dando ao homem, que também comeu.",
+            perguntas:[
+                {
+                    pergunta:"O que a mulher fez com o fruto?",
+                    opcoes:["Escondeu","Comeu","Jogou fora","Plantou"],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 3 registra que a mulher tomou e comeu do fruto."
+                },
+                {
+                    pergunta:"O homem também comeu?",
+                    opcoes:["Não","Sim","O texto não apresenta isso","Somente depois do dilúvio"],
+                    respostaCorreta:1,
+                    explicacao:"O relato afirma que o homem também comeu."
+                },
+                {
+                    pergunta:"O que aconteceu imediatamente depois?",
+                    opcoes:[
+                        "Perceberam que estavam nus",
+                        "Construíram a arca",
+                        "Foram para o Egito",
+                        "Encontraram Abraão"
+                    ],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 3 relata que os olhos de ambos foram abertos e perceberam que estavam nus."
+                }
+            ]
+        },
+
+        {
+            id:206,
+            titulo:"As consequências",
+            introducao:"A narrativa mostra consequências para a desobediência.",
+            conteudo:"Gênesis 3 apresenta Deus confrontando o homem e a mulher e descrevendo consequências relacionadas ao pecado.",
+            perguntas:[
+                {
+                    pergunta:"O que aconteceu com o acesso ao jardim?",
+                    opcoes:[
+                        "Continuou normalmente",
+                        "O homem foi expulso",
+                        "O jardim foi levado ao Egito",
+                        "Nada aconteceu"
+                    ],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 3:23 relata que o homem foi lançado fora do jardim do Éden."
+                },
+                {
+                    pergunta:"O que foi colocado para guardar o caminho da árvore da vida?",
+                    opcoes:[
+                        "Querubins",
+                        "Soldados romanos",
+                        "Animais",
+                        "Sacerdotes"
+                    ],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 3:24 menciona querubins e uma espada flamejante."
+                },
+                {
+                    pergunta:"Qual livro registra esse relato?",
+                    opcoes:["Êxodo","Gênesis","Isaías","Mateus"],
+                    respostaCorreta:1,
+                    explicacao:"O relato da criação e da queda está em Gênesis."
+                }
+            ]
+        }
+    ],
+
+    desafio:[
+        {
+            pergunta:"Qual foi a principal ordem relacionada à árvore do conhecimento?",
+            opcoes:[
+                "Não comer de seu fruto",
+                "Derrubá-la",
+                "Escondê-la",
+                "Construir uma casa nela"
+            ],
+            respostaCorreta:0,
+            explicacao:"A ordem de Gênesis 2:17 era não comer da árvore do conhecimento do bem e do mal."
+        },
+        {
+            pergunta:"O que aconteceu depois da desobediência?",
+            opcoes:[
+                "O homem foi expulso do jardim",
+                "O homem construiu a arca",
+                "Abraão nasceu",
+                "Babel foi construída"
+            ],
+            respostaCorreta:0,
+            explicacao:"Gênesis 3 termina com a expulsão do homem do jardim."
+        },
+        {
+            pergunta:"Quem conversa com a mulher no início da narrativa da queda?",
+            opcoes:["Noé","A serpente","Abraão","Moisés"],
+            respostaCorreta:1,
+            explicacao:"A serpente aparece conversando com a mulher."
+        }
+    ]
+},
+
+{
+    id:3,
+    titulo:"Caim e Abel",
+    descricao:"Descubra a história dos dois irmãos e suas ofertas.",
+    licoes:[
+        {
+            id:301,
+            titulo:"Os irmãos",
+            introducao:"Adão e Eva tiveram filhos, entre eles Caim e Abel.",
+            conteudo:"Gênesis 4 apresenta Caim como agricultor e Abel como pastor de ovelhas.",
+            perguntas:[
+                {
+                    pergunta:"Qual era a profissão de Abel?",
+                    opcoes:["Agricultor","Pastor de ovelhas","Soldado","Construtor"],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 4:2 apresenta Abel como pastor de ovelhas."
+                },
+                {
+                    pergunta:"Qual era a profissão de Caim?",
+                    opcoes:["Agricultor","Pastor","Sacerdote","Rei"],
+                    respostaCorreta:0,
+                    explicacao:"Caim é apresentado como agricultor."
+                },
+                {
+                    pergunta:"Caim e Abel eram irmãos?",
+                    opcoes:["Sim","Não","Eram primos","Eram vizinhos"],
+                    respostaCorreta:0,
+                    explicacao:"O texto apresenta Caim e Abel como irmãos."
+                }
+            ]
+        },
+        {
+            id:302,
+            titulo:"As ofertas",
+            introducao:"Os irmãos levaram ofertas ao Senhor.",
+            conteudo:"Gênesis 4 relata que Caim trouxe fruto da terra, enquanto Abel trouxe das primícias do seu rebanho e da gordura deste.",
+            perguntas:[
+                {
+                    pergunta:"O que Caim trouxe como oferta?",
+                    opcoes:["Frutos da terra","Ovelhas","Ouro","Água"],
+                    respostaCorreta:0,
+                    explicacao:"Caim trouxe do fruto da terra."
+                },
+                {
+                    pergunta:"O que Abel trouxe?",
+                    opcoes:["Frutos","Primícias do rebanho","Uma tenda","Uma espada"],
+                    respostaCorreta:1,
+                    explicacao:"Abel trouxe das primícias do seu rebanho."
+                },
+                {
+                    pergunta:"Quem são os dois irmãos envolvidos na oferta?",
+                    opcoes:["Caim e Abel","Noé e Sem","Abraão e Ló","Jacó e Esaú"],
+                    respostaCorreta:0,
+                    explicacao:"A narrativa apresenta Caim e Abel."
+                }
+            ]
+        },
+        {
+            id:303,
+            titulo:"O coração de Caim",
+            introducao:"A reação de Caim diante da situação é central na narrativa.",
+            conteudo:"Gênesis 4 descreve Caim ficando irado e abatido, sendo então advertido por Deus.",
+            perguntas:[
+                {
+                    pergunta:"Como Caim ficou?",
+                    opcoes:["Alegre","Irado e abatido","Dormindo","Surpreso apenas"],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 4:5 descreve Caim irado e abatido."
+                },
+                {
+                    pergunta:"Quem advertiu Caim?",
+                    opcoes:["Abel","Deus","Noé","Adão"],
+                    respostaCorreta:1,
+                    explicacao:"Deus conversa com Caim sobre sua reação."
+                },
+                {
+                    pergunta:"O que Deus disse que estava à porta?",
+                    opcoes:["O pecado","A arca","A bênção","O templo"],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 4:7 fala do pecado jazendo à porta."
+                }
+            ]
+        },
+        {
+            id:304,
+            titulo:"O primeiro assassinato",
+            introducao:"A narrativa de Gênesis 4 chega a um momento trágico.",
+            conteudo:"Caim leva Abel ao campo e o mata. Deus então confronta Caim sobre o ocorrido.",
+            perguntas:[
+                {
+                    pergunta:"Quem matou Abel?",
+                    opcoes:["Noé","Caim","Adão","Lameque"],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 4 relata que Caim matou seu irmão Abel."
+                },
+                {
+                    pergunta:"Onde Caim estava com Abel?",
+                    opcoes:["No campo","No jardim","No templo","No Egito"],
+                    respostaCorreta:0,
+                    explicacao:"O relato diz que estavam no campo."
+                },
+                {
+                    pergunta:"O que Deus perguntou a Caim?",
+                    opcoes:[
+                        "Onde está teu irmão?",
+                        "Onde está a arca?",
+                        "Onde está Abraão?",
+                        "Onde está o templo?"
+                    ],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 4:9 registra essa pergunta."
+                }
+            ]
+        },
+        {
+            id:305,
+            titulo:"As consequências",
+            introducao:"O ato de Caim trouxe consequências.",
+            conteudo:"Caim recebe uma sentença relacionada à terra e passa a viver como fugitivo e errante.",
+            perguntas:[
+                {
+                    pergunta:"Como Caim é descrito após a sentença?",
+                    opcoes:["Rei","Fugitivo e errante","Sacerdote","Profeta"],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 4:12 apresenta Caim como fugitivo e errante."
+                },
+                {
+                    pergunta:"Qual foi afetada pelo pecado de Caim?",
+                    opcoes:["A terra","O mar","O céu","O templo"],
+                    respostaCorreta:0,
+                    explicacao:"A sentença de Caim está relacionada à terra."
+                },
+                {
+                    pergunta:"Quem era irmão de Caim?",
+                    opcoes:["Abel","Noé","Sem","Abraão"],
+                    respostaCorreta:0,
+                    explicacao:"Abel era irmão de Caim."
+                }
+            ]
+        }
+    ],
+    desafio:[
+        {
+            pergunta:"Qual era a diferença entre as profissões dos irmãos?",
+            opcoes:[
+                "Caim agricultor e Abel pastor",
+                "Caim pastor e Abel agricultor",
+                "Ambos eram reis",
+                "Ambos eram sacerdotes"
+            ],
+            respostaCorreta:0,
+            explicacao:"Gênesis 4 apresenta Caim como agricultor e Abel como pastor."
+        },
+        {
+            pergunta:"Quem matou Abel?",
+            opcoes:["Caim","Noé","Adão","Lameque"],
+            respostaCorreta:0,
+            explicacao:"Caim matou seu irmão Abel."
+        },
+        {
+            pergunta:"O que Deus perguntou a Caim?",
+            opcoes:[
+                "Onde está teu irmão?",
+                "Onde está tua arca?",
+                "Onde está tua esposa?",
+                "Onde está teu altar?"
+            ],
+            respostaCorreta:0,
+            explicacao:"Essa é uma das perguntas centrais de Gênesis 4."
+        }
+    ]
+},
+
+{
+    id:4,
+    titulo:"Noé",
+    descricao:"A corrupção da humanidade, a arca, o dilúvio e a aliança.",
+    licoes:[
+        {
+            id:401,
+            titulo:"A corrupção da humanidade",
+            introducao:"Gênesis descreve a condição da humanidade antes do dilúvio.",
+            conteudo:"Gênesis 6 apresenta a humanidade em uma situação de grande corrupção e violência.",
+            perguntas:[
+                {
+                    pergunta:"Como a humanidade é descrita?",
+                    opcoes:["Sem pecado","Corrompida e violenta","Perfeita","Ausente"],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 6 descreve grande corrupção e violência."
+                },
+                {
+                    pergunta:"Quem encontrou graça diante do Senhor?",
+                    opcoes:["Noé","Caim","Faraó","Babel"],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 6:8 afirma que Noé achou graça diante do Senhor."
+                },
+                {
+                    pergunta:"Qual livro conta essa história?",
+                    opcoes:["Gênesis","Êxodo","Mateus","Atos"],
+                    respostaCorreta:0,
+                    explicacao:"A narrativa está em Gênesis."
+                }
+            ]
+        },
+        {
+            id:402,
+            titulo:"Noé",
+            introducao:"Noé ocupa papel central no relato.",
+            conteudo:"Noé é apresentado como homem justo em sua geração e alguém que andava com Deus.",
+            perguntas:[
+                {
+                    pergunta:"Como Noé é descrito?",
+                    opcoes:["Como rei","Como justo em sua geração","Como soldado","Como sacerdote egípcio"],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 6:9 apresenta Noé dessa maneira."
+                },
+                {
+                    pergunta:"Com quem Noé andava?",
+                    opcoes:["Com Faraó","Com Deus","Com Abraão","Com Babel"],
+                    respostaCorreta:1,
+                    explicacao:"O texto afirma que Noé andava com Deus."
+                },
+                {
+                    pergunta:"O que Deus ordenou a Noé?",
+                    opcoes:["Construir uma arca","Construir uma torre","Ir ao Egito","Construir um templo"],
+                    respostaCorreta:0,
+                    explicacao:"Deus ordenou a construção da arca."
+                }
+            ]
+        },
+        {
+            id:403,
+            titulo:"A arca",
+            introducao:"A arca seria o meio de preservação durante o juízo.",
+            conteudo:"Deus orientou Noé sobre a construção da arca e sobre a entrada de sua família e dos animais.",
+            perguntas:[
+                {
+                    pergunta:"Quem construiu a arca?",
+                    opcoes:["Noé","Abraão","Moisés","Davi"],
+                    respostaCorreta:0,
+                    explicacao:"Noé construiu a arca conforme a ordem de Deus."
+                },
+                {
+                    pergunta:"Quem entrou na arca com Noé?",
+                    opcoes:["Sua família","Somente animais","Somente soldados","Ninguém"],
+                    respostaCorreta:0,
+                    explicacao:"A família de Noé entrou com ele."
+                },
+                {
+                    pergunta:"O que a arca deveria preservar?",
+                    opcoes:["Vida durante o dilúvio","O templo","Jerusalém","Babel"],
+                    respostaCorreta:0,
+                    explicacao:"A arca serviria para preservar vidas durante o dilúvio."
+                }
+            ]
+        },
+        {
+            id:404,
+            titulo:"O dilúvio",
+            introducao:"As águas cobriram a terra conforme o relato de Gênesis.",
+            conteudo:"Gênesis 7 descreve a entrada na arca e o início do dilúvio.",
+            perguntas:[
+                {
+                    pergunta:"O que começou a cair sobre a terra?",
+                    opcoes:["Fogo","Chuva","Neve","Areia"],
+                    respostaCorreta:1,
+                    explicacao:"O relato apresenta a chuva do dilúvio."
+                },
+                {
+                    pergunta:"Onde Noé estava durante o dilúvio?",
+                    opcoes:["Na arca","No Egito","Em Babel","No jardim"],
+                    respostaCorreta:0,
+                    explicacao:"Noé estava na arca com sua família e os animais."
+                },
+                {
+                    pergunta:"Quem fechou a porta da arca?",
+                    opcoes:["Noé","Deus","Sem","Cam"],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 7:16 afirma que o Senhor fechou a porta."
+                }
+            ]
+        },
+        {
+            id:405,
+            titulo:"As águas baixam",
+            introducao:"Depois do dilúvio, as águas começaram a diminuir.",
+            conteudo:"Gênesis 8 descreve a diminuição das águas e a saída de Noé da arca.",
+            perguntas:[
+                {
+                    pergunta:"O que aconteceu com as águas?",
+                    opcoes:["Aumentaram para sempre","Começaram a baixar","Viraram fogo","Desapareceram instantaneamente"],
+                    respostaCorreta:1,
+                    explicacao:"Gênesis 8 apresenta a diminuição gradual das águas."
+                },
+                {
+                    pergunta:"Que ave Noé enviou em determinado momento?",
+                    opcoes:["Pomba","Águia apenas","Galinha","Pardal"],
+                    respostaCorreta:0,
+                    explicacao:"O texto relata o envio de uma pomba."
+                },
+                {
+                    pergunta:"O que Noé fez depois de sair?",
+                    opcoes:["Construiu um altar","Construiu Babel","Foi ao Egito","Começou uma guerra"],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 8:20 relata que Noé construiu um altar."
+                }
+            ]
+        },
+        {
+            id:406,
+            titulo:"A aliança",
+            introducao:"Depois do dilúvio, Deus estabelece uma aliança.",
+            conteudo:"Gênesis 9 apresenta a aliança de Deus com Noé e o sinal do arco nas nuvens.",
+            perguntas:[
+                {
+                    pergunta:"Qual foi o sinal da aliança?",
+                    opcoes:["O arco nas nuvens","A arca","Uma torre","Uma espada"],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 9 apresenta o arco como sinal da aliança."
+                },
+                {
+                    pergunta:"Com quem Deus estabeleceu a aliança?",
+                    opcoes:["Noé e sua descendência","Somente Abraão","Somente Moisés","Faraó"],
+                    respostaCorreta:0,
+                    explicacao:"A aliança é apresentada a Noé, seus filhos e sua descendência."
+                },
+                {
+                    pergunta:"O arco apareceu onde?",
+                    opcoes:["Nas nuvens","No templo","No mar","Na arca"],
+                    respostaCorreta:0,
+                    explicacao:"O sinal é apresentado nas nuvens."
+                }
+            ]
+        }
+    ],
+    desafio:[
+        {
+            pergunta:"Qual foi o principal meio de preservação durante o dilúvio?",
+            opcoes:["A arca","Uma torre","Uma cidade","Um templo"],
+            respostaCorreta:0,
+            explicacao:"A arca foi o meio estabelecido por Deus para preservar Noé, sua família e os animais."
+        },
+        {
+            pergunta:"Qual foi o sinal da aliança?",
+            opcoes:["O arco nas nuvens","Uma estrela","Uma torre","O fogo"],
+            respostaCorreta:0,
+            explicacao:"O arco nas nuvens é apresentado como sinal da aliança."
+        },
+        {
+            pergunta:"Quem fechou a porta da arca?",
+            opcoes:["Noé","Deus","Sem","Cam"],
+            respostaCorreta:1,
+            explicacao:"Gênesis 7:16 diz que o Senhor fechou a porta."
+        }
+    ]
+},
+
+{
+    id:5,
+    titulo:"A Torre de Babel",
+    descricao:"Uma humanidade unida em uma cidade e uma torre.",
+    licoes:[
+        {
+            id:501,
+            titulo:"Uma só língua",
+            introducao:"Depois do dilúvio, Gênesis apresenta os povos com uma mesma língua.",
+            conteudo:"Gênesis 11 começa afirmando que toda a terra tinha uma mesma língua e uma mesma maneira de falar.",
+            perguntas:[
+                {
+                    pergunta:"Quantas línguas são mencionadas no início do relato?",
+                    opcoes:["Uma","Duas","Sete","Muitas"],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 11:1 afirma que havia uma só língua."
+                },
+                {
+                    pergunta:"O que as pessoas faziam?",
+                    opcoes:["Viajavam juntas","Estavam espalhadas desde o início","Construíam a arca","Seguiam Abraão"],
+                    respostaCorreta:0,
+                    explicacao:"O relato apresenta a humanidade unida."
+                },
+                {
+                    pergunta:"Em qual livro aparece Babel?",
+                    opcoes:["Gênesis","Êxodo","Salmos","Mateus"],
+                    respostaCorreta:0,
+                    explicacao:"A história da torre está em Gênesis 11."
+                }
+            ]
+        },
+        {
+            id:502,
+            titulo:"O projeto da torre",
+            introducao:"O povo decidiu construir uma cidade e uma torre.",
+            conteudo:"Gênesis 11 relata a construção de uma cidade e de uma torre cuja parte superior chegaria até os céus.",
+            perguntas:[
+                {
+                    pergunta:"O que o povo decidiu construir?",
+                    opcoes:["Uma cidade e uma torre","Uma arca","Um templo","Um palácio"],
+                    respostaCorreta:0,
+                    explicacao:"Essa é a proposta apresentada em Gênesis 11."
+                },
+                {
+                    pergunta:"Qual material é mencionado?",
+                    opcoes:["Tijolos","Madeira apenas","Pedras preciosas","Ferro"],
+                    respostaCorreta:0,
+                    explicacao:"O texto menciona tijolos e betume."
+                },
+                {
+                    pergunta:"Por que queriam construir a torre?",
+                    opcoes:[
+                        "Para fazer um nome para si",
+                        "Para salvar Noé",
+                        "Para construir o templo",
+                        "Para encontrar Abraão"
+                    ],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 11:4 apresenta esse objetivo."
+                }
+            ]
+        },
+        {
+            id:503,
+            titulo:"O orgulho humano",
+            introducao:"O projeto revela uma intenção humana de grandeza.",
+            conteudo:"O povo afirma que deseja fazer um nome para si e evitar ser espalhado pela terra.",
+            perguntas:[
+                {
+                    pergunta:"O que queriam fazer para si?",
+                    opcoes:["Um nome","Uma arca","Uma aliança","Uma genealogia"],
+                    respostaCorreta:0,
+                    explicacao:"O texto registra o desejo de fazer um nome para si."
+                },
+                {
+                    pergunta:"O que queriam evitar?",
+                    opcoes:["Ser espalhados","Ter filhos","Trabalhar","Viajar"],
+                    respostaCorreta:0,
+                    explicacao:"Eles queriam evitar ser espalhados pela terra."
+                },
+                {
+                    pergunta:"Quem observa o projeto?",
+                    opcoes:["O Senhor","Faraó","Abraão","Moisés"],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 11 apresenta o Senhor observando a cidade e a torre."
+                }
+            ]
+        },
+        {
+            id:504,
+            titulo:"A confusão das línguas",
+            introducao:"A história termina com uma mudança na comunicação dos povos.",
+            conteudo:"Deus confunde a língua do povo, e eles deixam de compreender uns aos outros. O lugar passa a ser chamado Babel.",
+            perguntas:[
+                {
+                    pergunta:"O que Deus confundiu?",
+                    opcoes:["A língua","A arca","O clima","Os animais"],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 11:7 fala sobre confundir a língua."
+                },
+                {
+                    pergunta:"O que aconteceu depois?",
+                    opcoes:["Foram espalhados","Construíram o templo","Encontraram Moisés","Foram para o Egito"],
+                    respostaCorreta:0,
+                    explicacao:"O texto relata a dispersão pela terra."
+                },
+                {
+                    pergunta:"Como o lugar foi chamado?",
+                    opcoes:["Babel","Betel","Jericó","Sião"],
+                    respostaCorreta:0,
+                    explicacao:"O lugar recebeu o nome Babel."
+                }
+            ]
+        }
+    ],
+    desafio:[
+        {
+            pergunta:"Qual era o objetivo declarado pelos construtores?",
+            opcoes:["Fazer um nome para si","Construir a arca","Encontrar Noé","Adorar no templo"],
+            respostaCorreta:0,
+            explicacao:"Esse objetivo é apresentado em Gênesis 11:4."
+        },
+        {
+            pergunta:"O que Deus confundiu?",
+            opcoes:["A língua","O céu","O mar","Os animais"],
+            respostaCorreta:0,
+            explicacao:"O relato fala sobre a confusão da língua."
+        },
+        {
+            pergunta:"Qual foi o resultado da confusão?",
+            opcoes:["O povo foi espalhado","O povo construiu o templo","O povo encontrou Abraão","O povo voltou ao Éden"],
+            respostaCorreta:0,
+            explicacao:"A dispersão é o resultado descrito na narrativa."
+        }
+    ]
+},
+
+{
+    id:6,
+    titulo:"Abraão",
+    descricao:"O chamado, a promessa e os primeiros passos da fé de Abraão.",
+    licoes:[
+        {
+            id:601,
+            titulo:"O chamado de Abrão",
+            introducao:"Depois de Babel, a narrativa bíblica começa a acompanhar Abrão.",
+            conteudo:"Gênesis 12 registra Deus chamando Abrão para sair de sua terra, de sua parentela e da casa de seu pai.",
+            perguntas:[
+                {
+                    pergunta:"Quem Deus chamou em Gênesis 12?",
+                    opcoes:["Abrão","Moisés","Davi","Noé"],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 12 apresenta o chamado de Abrão."
+                },
+                {
+                    pergunta:"O que Abrão deveria deixar?",
+                    opcoes:["Sua terra e parentela","A arca","O templo","Jerusalém"],
+                    respostaCorreta:0,
+                    explicacao:"Deus manda Abrão sair de sua terra, parentela e casa de seu pai."
+                },
+                {
+                    pergunta:"Para onde ele deveria ir?",
+                    opcoes:["Para uma terra que Deus mostraria","Para o Egito imediatamente","Para Babel","Para o Éden"],
+                    respostaCorreta:0,
+                    explicacao:"Deus diz que mostraria a Abrão a terra para onde ele deveria ir."
+                }
+            ]
+        },
+        {
+            id:602,
+            titulo:"A promessa",
+            introducao:"O chamado de Abrão vem acompanhado de promessas.",
+            conteudo:"Deus promete fazer de Abrão uma grande nação, abençoá-lo e tornar grande o seu nome.",
+            perguntas:[
+                {
+                    pergunta:"O que Deus prometeu fazer de Abrão?",
+                    opcoes:["Uma grande nação","Um rei do Egito","Um sacerdote","Um anjo"],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 12:2 apresenta a promessa de uma grande nação."
+                },
+                {
+                    pergunta:"Deus prometeu abençoar Abrão?",
+                    opcoes:["Sim","Não","Somente depois do Êxodo","O texto não diz"],
+                    respostaCorreta:0,
+                    explicacao:"A promessa inclui a bênção de Abrão."
+                },
+                {
+                    pergunta:"Qual era o nome de Abrão naquele momento?",
+                    opcoes:["Abrão","Abraão","Israel","Jacó"],
+                    respostaCorreta:0,
+                    explicacao:"O nome ainda era Abrão; posteriormente Deus muda seu nome para Abraão."
+                }
+            ]
+        },
+        {
+            id:603,
+            titulo:"Abrão e Ló",
+            introducao:"A família de Abrão cresce e surge uma necessidade de separação.",
+            conteudo:"Gênesis 13 relata que Abrão e Ló possuíam muitos bens e seus pastores tiveram conflitos.",
+            perguntas:[
+                {
+                    pergunta:"Quem acompanhava Abrão?",
+                    opcoes:["Ló","Moisés","Davi","Samuel"],
+                    respostaCorreta:0,
+                    explicacao:"Ló acompanhou Abrão."
+                },
+                {
+                    pergunta:"Por que surgiu conflito?",
+                    opcoes:["Entre os pastores por causa dos bens","Por causa do templo","Por causa do Egito","Por causa da arca"],
+                    respostaCorreta:0,
+                    explicacao:"Os rebanhos e bens eram numerosos e os pastores tiveram conflito."
+                },
+                {
+                    pergunta:"O que Abrão propôs?",
+                    opcoes:["Separarem-se","Construírem uma torre","Voltarem ao Éden","Fazerem guerra"],
+                    respostaCorreta:0,
+                    explicacao:"Abrão propôs que ele e Ló se separassem para evitar conflito."
+                }
+            ]
+        },
+        {
+            id:604,
+            titulo:"Melquisedeque",
+            introducao:"Uma figura especial aparece na narrativa de Gênesis.",
+            conteudo:"Gênesis 14 apresenta Melquisedeque, rei de Salém e sacerdote do Deus Altíssimo, encontrando Abrão.",
+            perguntas:[
+                {
+                    pergunta:"Quem era Melquisedeque?",
+                    opcoes:[
+                        "Rei de Salém e sacerdote do Deus Altíssimo",
+                        "Rei do Egito",
+                        "Irmão de Abrão",
+                        "Filho de Noé"
+                    ],
+                    respostaCorreta:0,
+                    explicacao:"Essa é a descrição de Gênesis 14:18."
+                },
+                {
+                    pergunta:"O que Melquisedeque trouxe?",
+                    opcoes:["Pão e vinho","Uma espada","Uma arca","Ouro somente"],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 14:18 menciona pão e vinho."
+                },
+                {
+                    pergunta:"Abrão entregou o quê?",
+                    opcoes:["Dízimo","A arca","Sua casa","Seu rebanho inteiro"],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 14:20 relata que Abrão deu a Melquisedeque o dízimo de tudo."
+                }
+            ]
+        },
+        {
+            id:605,
+            titulo:"A aliança",
+            introducao:"Deus reafirma sua promessa a Abrão.",
+            conteudo:"Gênesis 15 apresenta Deus estabelecendo uma aliança com Abrão e reafirmando a promessa de descendência.",
+            perguntas:[
+                {
+                    pergunta:"O que Abrão desejava receber?",
+                    opcoes:["Um filho/herdeiro","Uma cidade","Uma coroa","Uma arca"],
+                    respostaCorreta:0,
+                    explicacao:"A questão da descendência aparece fortemente em Gênesis 15."
+                },
+                {
+                    pergunta:"O que Deus mostrou a Abrão ao falar da descendência?",
+                    opcoes:["As estrelas","O templo","O mar","A arca"],
+                    respostaCorreta:0,
+                    explicacao:"Deus manda Abrão olhar para os céus e contar as estrelas."
+                },
+                {
+                    pergunta:"Abrão creu no Senhor?",
+                    opcoes:["Sim","Não","Somente depois do Êxodo","O texto não apresenta isso"],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 15:6 afirma que Abrão creu no Senhor."
+                }
+            ]
+        },
+        {
+            id:606,
+            titulo:"O nascimento de Isaque",
+            introducao:"A promessa de um filho se concretiza.",
+            conteudo:"Gênesis 21 relata o nascimento de Isaque, filho de Abraão e Sara.",
+            perguntas:[
+                {
+                    pergunta:"Qual era o nome do filho de Abraão e Sara?",
+                    opcoes:["Isaque","Jacó","José","Esaú"],
+                    respostaCorreta:0,
+                    explicacao:"O filho prometido nasceu e recebeu o nome Isaque."
+                },
+                {
+                    pergunta:"Quem era a mãe de Isaque?",
+                    opcoes:["Sara","Rebeca","Raquel","Lia"],
+                    respostaCorreta:0,
+                    explicacao:"Sara era a mãe de Isaque."
+                },
+                {
+                    pergunta:"O nascimento de Isaque estava relacionado a quê?",
+                    opcoes:["À promessa de Deus","À torre de Babel","Ao dilúvio","Ao Êxodo"],
+                    respostaCorreta:0,
+                    explicacao:"O nascimento está ligado à promessa feita por Deus."
+                }
+            ]
+        },
+        {
+            id:607,
+            titulo:"Abraão e sua fé",
+            introducao:"A fé de Abraão é provada de maneira marcante.",
+            conteudo:"Gênesis 22 apresenta Deus provando Abraão e a história de Isaque no monte.",
+            perguntas:[
+                {
+                    pergunta:"Quem Deus pediu que Abraão levasse ao monte?",
+                    opcoes:["Isaque","Ló","Jacó","José"],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 22 apresenta Isaque como o filho levado por Abraão."
+                },
+                {
+                    pergunta:"O que Abraão demonstrou?",
+                    opcoes:["Fé e obediência","Medo de Babel","Desejo de ser rei","Vontade de fugir"],
+                    respostaCorreta:0,
+                    explicacao:"A narrativa destaca a fé e obediência de Abraão."
+                },
+                {
+                    pergunta:"O que aconteceu antes de Isaque ser sacrificado?",
+                    opcoes:[
+                        "Deus providenciou um carneiro",
+                        "Abraão construiu uma arca",
+                        "Ló voltou",
+                        "Babel foi destruída"
+                    ],
+                    respostaCorreta:0,
+                    explicacao:"Gênesis 22 relata a provisão de um carneiro."
+                }
+            ]
+        }
+    ],
+    desafio:[
+        {
+            pergunta:"Qual foi o primeiro grande chamado registrado para Abrão?",
+            opcoes:[
+                "Sair de sua terra e parentela",
+                "Construir uma arca",
+                "Construir Babel",
+                "Ir ao Egito para ser rei"
+            ],
+            respostaCorreta:0,
+            explicacao:"Gênesis 12 registra esse chamado."
+        },
+        {
+            pergunta:"Quem era o filho de Abraão e Sara?",
+            opcoes:["Isaque","Jacó","José","Esaú"],
+            respostaCorreta:0,
+            explicacao:"Isaque foi o filho de Abraão e Sara."
+        },
+        {
+            pergunta:"Quem encontrou Abrão trazendo pão e vinho?",
+            opcoes:["Melquisedeque","Noé","Moisés","Faraó"],
+            respostaCorreta:0,
+            explicacao:"Melquisedeque aparece em Gênesis 14."
+        }
+    ]
+}
+
+];
+
+
+/* =========================================================
+   ESTADO
+========================================================= */
+
+const defaultState = {
+    initialized:false,
+    level:null,
+    objective:null,
+
+    xp:0,
+    coins:0,
+    lives:5,
+
+    streak:0,
+    lastStudyDate:null,
+
+    currentJourney:1,
+    currentLesson:0,
+
+    completedLessons:[],
+    completedJourneys:[],
+    completedChallenges:[],
+
+    achievements:[],
+
+    lifeRecoveryAt:null
+};
+
+let state = loadState();
+
+let currentQuestion = 0;
+let currentLessonData = null;
+let currentChallengeQuestion = 0;
+let challengeCorrect = 0;
+
+
+/* =========================================================
+   PERSISTÊNCIA
+========================================================= */
+
+function loadState(){
+
+    try{
+
+        const saved = localStorage.getItem(STORAGE_KEY);
+
+        if(!saved){
+            return {...defaultState};
+        }
+
+        return {
+            ...defaultState,
+            ...JSON.parse(saved)
+        };
+
+    }catch(error){
+
+        console.error("Erro ao carregar progresso:",error);
+
+        return {...defaultState};
+
+    }
+
+}
+
+function saveState(){
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(state)
+    );
+
+    updateUI();
+
+}
+
+
+/* =========================================================
+   NAVEGAÇÃO
+========================================================= */
+
+function showScreen(name){
 
     document.querySelectorAll(".screen")
-    .forEach(function(tela){
+        .forEach(screen=>{
+            screen.classList.remove("active");
+        });
 
-        tela.classList.remove("active");
+    const target =
+        document.getElementById("screen-"+name);
 
-    });
-
-    document.getElementById(id)
-    .classList.add("active");
+    if(target){
+        target.classList.add("active");
+    }
 
     window.scrollTo({
         top:0,
         behavior:"smooth"
     });
+
+    updateUI();
 }
 
 
-/* ================= INÍCIO ================= */
+/* =========================================================
+   INÍCIO
+========================================================= */
 
-function mostrarNivel(){
+function startJourney(){
 
-    mostrarTela("nivel");
+    if(state.initialized){
+
+        showScreen("home");
+
+        return;
+
+    }
+
+    showScreen("level");
 
 }
 
 
-/* ================= NÍVEL ================= */
+/* =========================================================
+   NÍVEL
+========================================================= */
 
-function selecionarNivel(card){
+function selectLevel(button,value){
 
-    document
-    .querySelectorAll("#nivel .level-card")
-    .forEach(function(item){
-
+    document.querySelectorAll(
+        "#screen-level .option"
+    ).forEach(item=>{
         item.classList.remove("selected");
-
     });
 
-    card.classList.add("selected");
+    button.classList.add("selected");
 
-    nivelEscolhido =
-        card.querySelector(".level-name").innerText;
+    state.level = value;
 
-    document
-    .getElementById("continueButton")
-    .classList.add("ready");
+    document.getElementById(
+        "levelContinue"
+    ).disabled = false;
+
+}
+
+function goToObjective(){
+
+    if(!state.level) return;
+
+    showScreen("objective");
 
 }
 
 
-function continuarNivel(){
+/* =========================================================
+   OBJETIVO
+========================================================= */
 
-    if(nivelEscolhido === ""){
+function selectObjective(button,value){
 
-        return;
-
-    }
-
-    mostrarTela("objetivo");
-
-}
-
-
-/* ================= OBJETIVO ================= */
-
-function selecionarObjetivo(card){
-
-    document
-    .querySelectorAll("#objetivo .objetivo-card")
-    .forEach(function(item){
-
+    document.querySelectorAll(
+        "#screen-objective .option"
+    ).forEach(item=>{
         item.classList.remove("selected");
-
     });
 
-    card.classList.add("selected");
+    button.classList.add("selected");
 
-    objetivoEscolhido =
-        card.querySelector(".level-name").innerText;
+    state.objective = value;
 
-    document
-    .getElementById("objectiveContinue")
-    .classList.add("ready");
+    document.getElementById(
+        "objectiveContinue"
+    ).disabled = false;
+
+}
+
+function finishOnboarding(){
+
+    if(!state.objective) return;
+
+    state.initialized = true;
+
+    updateStreak();
+
+    saveState();
+
+    showScreen("home");
+
+    toast("🔥 Excelente! Sua jornada começou.");
 
 }
 
 
-function continuarObjetivo(){
+/* =========================================================
+   SEQUÊNCIA
+========================================================= */
 
-    if(objetivoEscolhido === ""){
+function dateString(date){
+
+    return date.toISOString().split("T")[0];
+
+}
+
+function updateStreak(){
+
+    const today = dateString(new Date());
+
+    if(!state.lastStudyDate){
+
+        state.streak = 1;
+        state.lastStudyDate = today;
+
+        return;
+    }
+
+    if(state.lastStudyDate === today){
 
         return;
 
     }
 
-    mostrarTela("jornada");
+    const last =
+        new Date(state.lastStudyDate+"T00:00:00");
 
-}
+    const current =
+        new Date(today+"T00:00:00");
 
+    const diff =
+        Math.floor(
+            (current-last)/(1000*60*60*24)
+        );
 
-/* ================= MISSÃO ================= */
+    if(diff === 1){
 
-function abrirMissao(){
+        state.streak++;
 
-    mostrarTela("missao");
+    }else if(diff > 1){
 
-}
-
-
-/* ================= QUIZ ================= */
-
-function abrirQuiz(){
-
-    mostrarTela("quiz");
-
-}
-
-
-function responder(botao, correta){
-
-    if(perguntaRespondida){
-
-        return;
+        state.streak = 1;
 
     }
 
-    perguntaRespondida = true;
+    state.lastStudyDate = today;
 
-    const respostas =
-        document.querySelectorAll(".answer");
+}
 
-    respostas.forEach(function(item){
 
-        item.disabled = true;
+/* =========================================================
+   XP
+========================================================= */
 
-    });
+function addXP(amount){
 
-    if(correta){
+    const oldLevel =
+        getLevel();
 
-        botao.classList.add("correct");
+    state.xp += amount;
 
-        xpAtual += 10;
+    const newLevel =
+        getLevel();
 
-        document
-        .getElementById("xp")
-        .innerText = xpAtual;
+    saveState();
 
-        setTimeout(function(){
+    if(newLevel > oldLevel){
 
-            document
-            .getElementById("resultIcon")
-            .innerText = "🎉";
-
-            document
-            .getElementById("resultTitle")
-            .innerText = "Resposta correta!";
-
-            document
-            .getElementById("resultText")
-            .innerText =
-            "Excelente! Você acabou de aprender mais um detalhe importante da Palavra de Deus.";
-
-            document
-            .getElementById("totalXP")
-            .innerText =
-            xpAtual + " XP";
-
-            mostrarTela("resultado");
-
-        },700);
+        toast(
+            "🎉 Você alcançou o nível "+
+            newLevel+" — "+
+            NIVEL_NOMES[newLevel-1]
+        );
 
     }else{
 
-        botao.classList.add("wrong");
+        toast("⭐ +"+amount+" XP");
 
-        setTimeout(function(){
+    }
 
-            document
-            .getElementById("resultIcon")
-            .innerText = "💡";
+}
 
-            document
-            .getElementById("resultTitle")
-            .innerText = "Continue aprendendo!";
+function getLevel(){
 
-            document
-            .getElementById("resultText")
-            .innerText =
-            "Não tem problema errar. Cada resposta é uma oportunidade de aprender mais sobre a Bíblia.";
+    let level = 1;
 
-            document
-            .getElementById("totalXP")
-            .innerText =
-            xpAtual + " XP";
+    for(let i=0;i<NIVEL_XP.length;i++){
 
-            mostrarTela("resultado");
+        if(state.xp >= NIVEL_XP[i]){
+            level=i+1;
+        }
 
-        },700);
+    }
+
+    return Math.min(level,NIVEL_NOMES.length);
+
+}
+
+function getLevelProgress(){
+
+    const level =
+        getLevel();
+
+    if(level >= NIVEL_XP.length){
+
+        return 100;
+
+    }
+
+    const start =
+        NIVEL_XP[level-1];
+
+    const end =
+        NIVEL_XP[level];
+
+    return Math.min(
+        100,
+        Math.round(
+            ((state.xp-start)/(end-start))*100
+        )
+    );
+
+}
+
+
+/* =========================================================
+   VIDAS
+========================================================= */
+
+function loseLife(){
+
+    state.lives =
+        Math.max(0,state.lives-1);
+
+    saveState();
+
+    if(state.lives <= 0){
+
+        state.lifeRecoveryAt =
+            Date.now()+60000;
+
+        saveState();
+
+        showScreen("no-lives");
+
+        return false;
+
+    }
+
+    return true;
+
+}
+
+function recoverLife(){
+
+    state.lives = 5;
+    state.lifeRecoveryAt = null;
+
+    saveState();
+
+    showScreen("home");
+
+    toast("❤️ Suas vidas foram recuperadas!");
+
+}
+
+
+/* =========================================================
+   MOEDAS
+========================================================= */
+
+function addCoins(amount){
+
+    state.coins += amount;
+
+    saveState();
+
+}
+
+
+/* =========================================================
+   MAPA
+========================================================= */
+
+function renderMap(){
+
+    const container =
+        document.getElementById("journeyList");
+
+    container.innerHTML = "";
+
+    jornadas.forEach((journey,index)=>{
+
+        const completed =
+            state.completedJourneys.includes(
+                journey.id
+            );
+
+        const unlocked =
+            journey.id === 1 ||
+            state.completedJourneys.includes(
+                journey.id-1
+            );
+
+        const progress =
+            getJourneyProgress(journey.id);
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "journey "+
+            (!unlocked?"locked ":"")+
+            (completed?"completed":"");
+
+        div.innerHTML = `
+
+            <div class="journey-node">
+                ${
+                    completed
+                    ?"✓"
+                    :journey.id
+                }
+            </div>
+
+            <div class="journey-top">
+
+                <div>
+
+                    <div class="muted"
+                         style="font-size:11px">
+                        JORNADA ${journey.id}
+                    </div>
+
+                    <h3>
+                        ${journey.titulo}
+                    </h3>
+
+                </div>
+
+                <div class="status">
+                    ${
+                        completed
+                        ?"✓ CONCLUÍDA"
+                        :unlocked
+                        ?"▶ DISPONÍVEL"
+                        :"🔒 BLOQUEADA"
+                    }
+                </div>
+
+            </div>
+
+            <p>
+                ${journey.descricao}
+            </p>
+
+            <div class="progress-info">
+
+                <span>
+                    ${progress}/${journey.licoes.length} lições
+                </span>
+
+                <span>
+                    ${
+                        Math.round(
+                            progress/journey.licoes.length*100
+                        )
+                    }%
+                </span>
+
+            </div>
+
+            <div class="progress">
+                <div class="progress-bar"
+                     style="
+                        width:${
+                            progress/journey.licoes.length*100
+                        }%
+                     ">
+                </div>
+            </div>
+
+        `;
+
+        if(unlocked){
+
+            div.onclick =
+                ()=>openJourney(journey.id);
+
+        }
+
+        container.appendChild(div);
+
+    });
+
+}
+
+function getJourney(id){
+
+    return jornadas.find(
+        j=>j.id===id
+    );
+
+}
+
+function getJourneyProgress(id){
+
+    const journey =
+        getJourney(id);
+
+    if(!journey) return 0;
+
+    return journey.licoes.filter(
+        lesson =>
+            state.completedLessons.includes(
+                lesson.id
+            )
+    ).length;
+
+}
+
+
+/* =========================================================
+   JORNADA
+========================================================= */
+
+function openJourney(id){
+
+    const journey =
+        getJourney(id);
+
+    if(!journey) return;
+
+    const unlocked =
+        id===1 ||
+        state.completedJourneys.includes(id-1);
+
+    if(!unlocked){
+
+        toast("🔒 Complete a jornada anterior primeiro.");
+
+        return;
+
+    }
+
+    state.currentJourney = id;
+
+    renderJourney(journey);
+
+    showScreen("journey");
+
+}
+
+function renderJourney(journey){
+
+    const progress =
+        getJourneyProgress(journey.id);
+
+    const allLessonsDone =
+        progress === journey.licoes.length;
+
+    const challengeDone =
+        state.completedChallenges.includes(
+            journey.id
+        );
+
+    let html = `
+
+        <div class="card">
+
+            <div class="gold">
+                GÊNESIS • JORNADA ${journey.id}
+            </div>
+
+            <h1 style="font-size:40px;margin:8px 0">
+                ${journey.titulo}
+            </h1>
+
+            <p class="muted"
+               style="line-height:1.6">
+                ${journey.descricao}
+            </p>
+
+            <div style="margin-top:25px">
+
+                <div class="progress-info">
+
+                    <span>
+                        ${progress}/${journey.licoes.length} concluídas
+                    </span>
+
+                    <span>
+                        ${Math.round(progress/journey.licoes.length*100)}%
+                    </span>
+
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar"
+                         style="
+                         width:${progress/journey.licoes.length*100}%
+                         ">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card" style="margin-top:20px">
+
+            <h2 style="margin-bottom:17px">
+                📚 Lições
+            </h2>
+
+            <div class="lesson-list">
+
+    `;
+
+    journey.licoes.forEach((lesson,index)=>{
+
+        const completed =
+            state.completedLessons.includes(
+                lesson.id
+            );
+
+        const unlocked =
+            index===0 ||
+            state.completedLessons.includes(
+                journey.licoes[index-1].id
+            );
+
+        html += `
+
+            <div class="
+                lesson-item
+                ${completed?"completed":""}
+                ${!unlocked?"locked":""}
+            "
+            ${
+                unlocked
+                ?`onclick="openLesson(${journey.id},${lesson.id})"`
+                :""
+            }>
+
+                <div class="lesson-number">
+
+                    ${
+                        completed
+                        ?"✓"
+                        :index+1
+                    }
+
+                </div>
+
+                <div class="lesson-info">
+
+                    <h3>
+                        ${lesson.titulo}
+                    </h3>
+
+                    <p>
+                        ${lesson.introducao}
+                    </p>
+
+                </div>
+
+                <div class="lesson-state">
+
+                    ${
+                        completed
+                        ?"✓"
+                        :unlocked
+                        ?"→"
+                        :"🔒"
+                    }
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+    html += `
+
+            </div>
+
+        </div>
+
+    `;
+
+    if(allLessonsDone){
+
+        html += `
+
+            <div class="card"
+                 style="margin-top:20px">
+
+                <div style="
+                    font-size:35px;
+                    margin-bottom:10px
+                ">
+                    🏆
+                </div>
+
+                <h2>
+                    Desafio da Jornada
+                </h2>
+
+                <p class="muted"
+                   style="margin:8px 0 18px">
+                    Você concluiu todas as lições.
+                    Agora prove o que aprendeu.
+                </p>
+
+                <button class="primary"
+                        onclick="openChallenge(${journey.id})">
+
+                    ${
+                        challengeDone
+                        ?"Revisar desafio"
+                        :"Começar desafio →"
+                    }
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+    document.getElementById(
+        "journeyDetails"
+    ).innerHTML = html;
+
+}
+
+
+/* =========================================================
+   LIÇÕES
+========================================================= */
+
+function openLesson(journeyId,lessonId){
+
+    const journey =
+        getJourney(journeyId);
+
+    const lesson =
+        journey.licoes.find(
+            l=>l.id===lessonId
+        );
+
+    if(!lesson) return;
+
+    const index =
+        journey.licoes.findIndex(
+            l=>l.id===lessonId
+        );
+
+    if(index>0){
+
+        const previous =
+            journey.licoes[index-1];
+
+        if(
+            !state.completedLessons.includes(
+                previous.id
+            )
+        ){
+
+            toast("🔒 Complete a lição anterior.");
+
+            return;
+
+        }
+
+    }
+
+    if(state.lives<=0){
+
+        showScreen("no-lives");
+
+        return;
+
+    }
+
+    state.currentJourney =
+        journeyId;
+
+    state.currentLesson =
+        index;
+
+    currentLessonData =
+        lesson;
+
+    currentQuestion = 0;
+
+    renderQuestion();
+
+    showScreen("lesson");
+
+}
+
+function renderQuestion(){
+
+    const lesson =
+        currentLessonData;
+
+    const question =
+        lesson.perguntas[currentQuestion];
+
+    const total =
+        lesson.perguntas.length;
+
+    const content =
+        document.getElementById(
+            "lessonContent"
+        );
+
+    content.innerHTML = `
+
+        <div class="lesson-header">
+
+            <div class="tag">
+                GÊNESIS • JORNADA ${state.currentJourney}
+            </div>
+
+            <h1>
+                ${lesson.titulo}
+            </h1>
+
+            <p>
+                ${lesson.introducao}
+            </p>
+
+        </div>
+
+        ${
+            currentQuestion===0
+            ?`
+            <div class="learn-box">
+
+                <h3>
+                    📖 APRENDA
+                </h3>
+
+                <p>
+                    ${lesson.conteudo}
+                </p>
+
+            </div>
+            `
+            :""
+        }
+
+        <div class="question-card">
+
+            <div class="question-counter">
+                Pergunta ${currentQuestion+1} de ${total}
+            </div>
+
+            <div class="question">
+                ${question.pergunta}
+            </div>
+
+            <div class="answers">
+
+                ${question.opcoes.map(
+                    (option,index)=>`
+
+                        <button
+                            class="answer"
+                            onclick="answerQuestion(${index})"
+                            id="answer-${index}">
+
+                            <strong>
+                                ${String.fromCharCode(65+index)}.
+                            </strong>
+                            ${option}
+
+                        </button>
+
+                    `
+                ).join("")}
+
+            </div>
+
+            <div id="feedback"
+                 class="feedback">
+
+            </div>
+
+            <button
+                id="questionContinue"
+                class="primary question-action"
+                style="display:none"
+                onclick="nextQuestion()">
+
+                Continuar →
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+function answerQuestion(selected){
+
+    const lesson =
+        currentLessonData;
+
+    const question =
+        lesson.perguntas[currentQuestion];
+
+    const buttons =
+        document.querySelectorAll(".answer");
+
+    buttons.forEach(button=>{
+        button.disabled=true;
+    });
+
+    const selectedButton =
+        buttons[selected];
+
+    const correctButton =
+        buttons[question.respostaCorreta];
+
+    const feedback =
+        document.getElementById("feedback");
+
+    const correct =
+        selected ===
+        question.respostaCorreta;
+
+    if(correct){
+
+        selectedButton.classList.add("correct");
+
+        feedback.className =
+            "feedback show correct";
+
+        feedback.innerHTML = `
+
+            <strong>
+                ✓ Resposta correta!
+            </strong>
+
+            <span>
+                +10 XP • +2 🪙
+            </span>
+
+            <div style="margin-top:7px">
+                ${question.explicacao}
+            </div>
+
+        `;
+
+        addXP(10);
+
+        addCoins(2);
+
+    }else{
+
+        selectedButton.classList.add("wrong");
+
+        correctButton.classList.add("correct");
+
+        feedback.className =
+            "feedback show wrong";
+
+        feedback.innerHTML = `
+
+            <strong>
+                ✕ Resposta incorreta
+            </strong>
+
+            <div>
+                ${question.explicacao}
+            </div>
+
+        `;
+
+        const canContinue =
+            loseLife();
+
+        if(!canContinue) return;
+
+    }
+
+    document.getElementById(
+        "questionContinue"
+    ).style.display="block";
+
+}
+
+function nextQuestion(){
+
+    currentQuestion++;
+
+    if(
+        currentQuestion >=
+        currentLessonData.perguntas.length
+    ){
+
+        finishLesson();
+
+        return;
+
+    }
+
+    renderQuestion();
+
+}
+
+
+/* =========================================================
+   FINAL DA LIÇÃO
+========================================================= */
+
+function finishLesson(){
+
+    const lesson =
+        currentLessonData;
+
+    if(
+        !state.completedLessons.includes(
+            lesson.id
+        )
+    ){
+
+        state.completedLessons.push(
+            lesson.id
+        );
+
+        addXP(20);
+
+        addCoins(5);
+
+        updateStreak();
+
+        checkAchievements();
+
+        saveState();
+
+    }
+
+    renderCompleteLesson();
+
+    showScreen("complete");
+
+}
+
+function renderCompleteLesson(){
+
+    const journey =
+        getJourney(
+            state.currentJourney
+        );
+
+    const progress =
+        getJourneyProgress(
+            journey.id
+        );
+
+    const complete =
+        progress === journey.licoes.length;
+
+    const nextIndex =
+        journey.licoes.findIndex(
+            l=>
+                !state.completedLessons.includes(
+                    l.id
+                )
+        );
+
+    let nextButton = "";
+
+    if(nextIndex !== -1){
+
+        nextButton = `
+
+            <button class="primary"
+                    onclick="
+                        openLesson(
+                            ${journey.id},
+                            ${journey.licoes[nextIndex].id}
+                        )
+                    ">
+
+                Próxima lição →
+
+            </button>
+
+        `;
+
+    }else if(complete){
+
+        nextButton = `
+
+            <button class="primary"
+                    onclick="
+                        renderJourney(getJourney(${journey.id}));
+                        showScreen('journey');
+                    ">
+
+                Ver desafio da jornada →
+
+            </button>
+
+        `;
+
+    }
+
+    document.getElementById(
+        "completeContent"
+    ).innerHTML = `
+
+        <div class="complete-card">
+
+            <div class="complete-icon">
+                ✓
+            </div>
+
+            <div class="gold">
+                LIÇÃO CONCLUÍDA
+            </div>
+
+            <h1>
+                Muito bem! 🎉
+            </h1>
+
+            <p>
+                Você concluiu:
+                <strong>${currentLessonData.titulo}</strong>
+            </p>
+
+            <div class="reward">
+
+                <span>
+                    ⭐ +30 XP
+                </span>
+
+                <span>
+                    🪙 +7 moedas
+                </span>
+
+            </div>
+
+            <div class="card"
+                 style="text-align:left;margin-bottom:20px">
+
+                <div class="progress-info">
+
+                    <span>
+                        Progresso da jornada
+                    </span>
+
+                    <span>
+                        ${progress}/${journey.licoes.length}
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <div class="progress-bar"
+                         style="
+                            width:${
+                                progress/journey.licoes.length*100
+                            }%
+                         ">
+                    </div>
+
+                </div>
+
+            </div>
+
+            ${nextButton}
+
+        </div>
+
+    `;
+
+}
+
+function backFromLesson(){
+
+    renderJourney(
+        getJourney(state.currentJourney)
+    );
+
+    showScreen("journey");
+
+}
+
+
+/* =========================================================
+   DESAFIO
+========================================================= */
+
+function openChallenge(journeyId){
+
+    const journey =
+        getJourney(journeyId);
+
+    if(!journey) return;
+
+    const progress =
+        getJourneyProgress(journeyId);
+
+    if(progress < journey.licoes.length){
+
+        toast(
+            "🔒 Complete todas as lições primeiro."
+        );
+
+        return;
+
+    }
+
+    state.currentJourney =
+        journeyId;
+
+    currentChallengeQuestion=0;
+
+    challengeCorrect=0;
+
+    renderChallenge();
+
+    showScreen("challenge");
+
+}
+
+function renderChallenge(){
+
+    const journey =
+        getJourney(state.currentJourney);
+
+    const questions =
+        journey.desafio;
+
+    const question =
+        questions[currentChallengeQuestion];
+
+    document.getElementById(
+        "challengeContent"
+    ).innerHTML = `
+
+        <div class="challenge-hero">
+
+            <div class="trophy">
+                🏆
+            </div>
+
+            <div class="gold">
+                DESAFIO DA JORNADA
+            </div>
+
+            <h1 style="margin:8px 0">
+                ${journey.titulo}
+            </h1>
+
+            <p class="muted">
+                Agora é hora de testar seu conhecimento.
+            </p>
+
+        </div>
+
+        <div class="question-card">
+
+            <div class="question-counter">
+                Desafio ${currentChallengeQuestion+1}
+                de ${questions.length}
+            </div>
+
+            <div class="question">
+                ${question.pergunta}
+            </div>
+
+            <div class="answers">
+
+                ${question.opcoes.map(
+                    (option,index)=>`
+
+                        <button
+                            class="answer"
+                            onclick="answerChallenge(${index})">
+
+                            <strong>
+                                ${String.fromCharCode(65+index)}.
+                            </strong>
+                            ${option}
+
+                        </button>
+
+                    `
+                ).join("")}
+
+            </div>
+
+            <div id="challengeFeedback"
+                 class="feedback">
+            </div>
+
+            <button
+                id="challengeContinue"
+                class="primary question-action"
+                style="display:none"
+                onclick="nextChallenge()">
+
+                Continuar →
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+function answerChallenge(selected){
+
+    const journey =
+        getJourney(state.currentJourney);
+
+    const question =
+        journey.desafio[currentChallengeQuestion];
+
+    const buttons =
+        document.querySelectorAll(
+            "#challengeContent .answer"
+        );
+
+    buttons.forEach(
+        b=>b.disabled=true
+    );
+
+    const feedback =
+        document.getElementById(
+            "challengeFeedback"
+        );
+
+    if(
+        selected ===
+        question.respostaCorreta
+    ){
+
+        buttons[selected]
+            .classList.add("correct");
+
+        feedback.className =
+            "feedback show correct";
+
+        feedback.innerHTML = `
+
+            <strong>
+                ✓ Excelente!
+            </strong>
+
+            ${question.explicacao}
+
+        `;
+
+        challengeCorrect++;
+
+    }else{
+
+        buttons[selected]
+            .classList.add("wrong");
+
+        buttons[
+            question.respostaCorreta
+        ].classList.add("correct");
+
+        feedback.className =
+            "feedback show wrong";
+
+        feedback.innerHTML = `
+
+            <strong>
+                ✕ Quase!
+            </strong>
+
+            ${question.explicacao}
+
+        `;
+
+    }
+
+    document.getElementById(
+        "challengeContinue"
+    ).style.display="block";
+
+}
+
+function nextChallenge(){
+
+    const journey =
+        getJourney(state.currentJourney);
+
+    currentChallengeQuestion++;
+
+    if(
+        currentChallengeQuestion >=
+        journey.desafio.length
+    ){
+
+        finishChallenge();
+
+        return;
+
+    }
+
+    renderChallenge();
+
+}
+
+function finishChallenge(){
+
+    const journey =
+        getJourney(state.currentJourney);
+
+    if(
+        !state.completedChallenges.includes(
+            journey.id
+        )
+    ){
+
+        state.completedChallenges.push(
+            journey.id
+        );
+
+        addXP(50);
+
+        addCoins(10);
+
+        checkAchievements();
+
+        saveState();
+
+    }
+
+    const nextJourney =
+        getJourney(journey.id+1);
+
+    document.getElementById(
+        "completeContent"
+    ).innerHTML = `
+
+        <div class="complete-card">
+
+            <div class="complete-icon">
+                🏆
+            </div>
+
+            <div class="gold">
+                DESAFIO CONCLUÍDO
+            </div>
+
+            <h1>
+                Jornada completa!
+            </h1>
+
+            <p>
+                Você terminou a jornada
+                <strong>${journey.titulo}</strong>.
+            </p>
+
+            <div class="reward">
+
+                <span>
+                    ⭐ +50 XP
+                </span>
+
+                <span>
+                    🪙 +10 moedas
+                </span>
+
+                <span>
+                    🔓 Novo conteúdo
+                </span>
+
+            </div>
+
+            ${
+                nextJourney
+                ?
+                `
+                <button class="primary"
+                        onclick="
+                            state.currentJourney=${nextJourney.id};
+                            saveState();
+                            renderMap();
+                            showScreen('map');
+                        ">
+
+                    🔓 Ir para a próxima jornada →
+
+                </button>
+                `
+                :
+                `
+                <button class="primary"
+                        onclick="showScreen('home')">
+
+                    Voltar para Home
+
+                </button>
+                `
+            }
+
+        </div>
+
+    `;
+
+    showScreen("complete");
+
+}
+
+
+/* =========================================================
+   CONQUISTAS
+========================================================= */
+
+const achievements = [
+
+    {
+        id:"firstLesson",
+        icon:"🏆",
+        title:"Primeiro passo",
+        description:"Complete sua primeira lição.",
+        condition:()=>state.completedLessons.length>=1
+    },
+
+    {
+        id:"streak3",
+        icon:"🔥",
+        title:"Em sequência",
+        description:"Estude por 3 dias consecutivos.",
+        condition:()=>state.streak>=3
+    },
+
+    {
+        id:"firstJourney",
+        icon:"📖",
+        title:"Primeiro livro",
+        description:"Complete uma jornada.",
+        condition:()=>state.completedJourneys.length>=1
+    },
+
+    {
+        id:"xp100",
+        icon:"⭐",
+        title:"100 XP",
+        description:"Alcance 100 XP.",
+        condition:()=>state.xp>=100
+    },
+
+    {
+        id:"genesisMaster",
+        icon:"👑",
+        title:"Mestre de Gênesis",
+        description:"Complete todas as jornadas disponíveis de Gênesis.",
+        condition:()=>state.completedJourneys.length>=jornadas.length
+    }
+
+];
+
+function checkAchievements(){
+
+    achievements.forEach(
+        achievement=>{
+
+            if(
+                achievement.condition() &&
+                !state.achievements.includes(
+                    achievement.id
+                )
+            ){
+
+                state.achievements.push(
+                    achievement.id
+                );
+
+                toast(
+                    "🏆 Conquista desbloqueada: "+
+                    achievement.title
+                );
+
+            }
+
+        }
+    );
+
+    saveState();
+
+}
+
+function renderAchievements(){
+
+    const container =
+        document.getElementById(
+            "achievementContent"
+        );
+
+    container.innerHTML =
+        achievements.map(
+            achievement=>{
+
+                const unlocked =
+                    state.achievements.includes(
+                        achievement.id
+                    );
+
+                return `
+
+                    <div class="
+                        achievement
+                        ${!unlocked?"locked":""}
+                    ">
+
+                        <div class="achievement-icon">
+                            ${achievement.icon}
+                        </div>
+
+                        <h3>
+                            ${achievement.title}
+                        </h3>
+
+                        <p>
+                            ${achievement.description}
+                        </p>
+
+                        <div style="
+                            margin-top:10px;
+                            font-size:11px;
+                            color:var(--gold)
+                        ">
+
+                            ${
+                                unlocked
+                                ?"✓ DESBLOQUEADA"
+                                :"🔒 BLOQUEADA"
+                            }
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+/* =========================================================
+   PERFIL
+========================================================= */
+
+function showProfile(){
+
+    renderProfile();
+
+    showScreen("profile");
+
+}
+
+function renderProfile(){
+
+    const level =
+        getLevel();
+
+    const progress =
+        calculateBibleProgress();
+
+    document.getElementById(
+        "profileContent"
+    ).innerHTML = `
+
+        <div class="profile-header">
+
+            <div class="avatar">
+                BQ
+            </div>
+
+            <div>
+
+                <h1>
+                    BíbliaQuest
+                </h1>
+
+                <div class="gold">
+                    Nível ${level} —
+                    ${NIVEL_NOMES[level-1]}
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="stats-grid">
+
+            <div class="big-stat">
+                <div class="big-stat-icon">⭐</div>
+                <div class="big-stat-value">
+                    ${state.xp}
+                </div>
+                <div class="big-stat-label">
+                    XP
+                </div>
+            </div>
+
+            <div class="big-stat">
+                <div class="big-stat-icon">🪙</div>
+                <div class="big-stat-value">
+                    ${state.coins}
+                </div>
+                <div class="big-stat-label">
+                    moedas
+                </div>
+            </div>
+
+            <div class="big-stat">
+                <div class="big-stat-icon">🔥</div>
+                <div class="big-stat-value">
+                    ${state.streak}
+                </div>
+                <div class="big-stat-label">
+                    sequência
+                </div>
+            </div>
+
+            <div class="big-stat">
+                <div class="big-stat-icon">❤️</div>
+                <div class="big-stat-value">
+                    ${state.lives}
+                </div>
+                <div class="big-stat-label">
+                    vidas
+                </div>
+            </div>
+
+        </div>
+
+        <div class="profile-grid">
+
+            <div class="card">
+
+                <h3>
+                    📚 Lições concluídas
+                </h3>
+
+                <div style="
+                    font-size:35px;
+                    font-weight:800;
+                    margin-top:10px
+                ">
+                    ${state.completedLessons.length}
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <h3>
+                    🗺️ Jornadas concluídas
+                </h3>
+
+                <div style="
+                    font-size:35px;
+                    font-weight:800;
+                    margin-top:10px
+                ">
+                    ${state.completedJourneys.length}
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <h3>
+                    🏆 Conquistas
+                </h3>
+
+                <div style="
+                    font-size:35px;
+                    font-weight:800;
+                    margin-top:10px
+                ">
+                    ${state.achievements.length}/${achievements.length}
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <h3>
+                    📖 Bíblia
+                </h3>
+
+                <div style="
+                    font-size:35px;
+                    font-weight:800;
+                    margin-top:10px
+                ">
+                    ${progress}%
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card"
+             style="margin-top:20px">
+
+            <h3 style="margin-bottom:12px">
+                Progresso da Bíblia
+            </h3>
+
+            <div class="progress">
+                <div class="progress-bar"
+                     style="width:${progress}%">
+                </div>
+            </div>
+
+            <div class="muted"
+                 style="margin-top:10px">
+                ${progress}% da jornada disponível concluída
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+function calculateBibleProgress(){
+
+    const total =
+        jornadas.reduce(
+            (sum,j)=>sum+j.licoes.length,
+            0
+        );
+
+    if(!total) return 0;
+
+    return Math.round(
+        state.completedLessons.length/
+        total*100
+    );
+
+}
+
+
+/* =========================================================
+   BÍBLIA
+========================================================= */
+
+function showBible(){
+
+    renderBible();
+
+    showScreen("bible");
+
+}
+
+function renderBible(){
+
+    document.getElementById(
+        "oldTestament"
+    ).innerHTML =
+        LIVROS_AT.map(
+            (book,index)=>`
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    padding:13px 0;
+                    border-bottom:1px solid var(--border)
+                ">
+
+                    <span>
+                        ${index+1}. ${book}
+                    </span>
+
+                    <span class="
+                        ${book==="Gênesis"?"gold":"muted"}
+                    ">
+
+                        ${
+                            book==="Gênesis"
+                            ?"✓ Disponível"
+                            :"🔒 Em breve"
+                        }
+
+                    </span>
+
+                </div>
+
+            `
+        ).join("");
+
+    document.getElementById(
+        "newTestament"
+    ).innerHTML =
+        LIVROS_NT.map(
+            (book,index)=>`
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    padding:13px 0;
+                    border-bottom:1px solid var(--border)
+                ">
+
+                    <span>
+                        ${index+1}. ${book}
+                    </span>
+
+                    <span class="muted">
+                        🔒 Em breve
+                    </span>
+
+                </div>
+
+            `
+        ).join("");
+
+}
+
+
+/* =========================================================
+   CONTINUAR JORNADA
+========================================================= */
+
+function continueJourney(){
+
+    renderMap();
+
+    showScreen("map");
+
+}
+
+
+/* =========================================================
+   UI
+========================================================= */
+
+function updateUI(){
+
+    const level =
+        getLevel();
+
+    document.getElementById(
+        "topStats"
+    ).innerHTML = `
+
+        <div class="stat">
+            🔥 ${state.streak}
+        </div>
+
+        <div class="stat">
+            ⭐ ${state.xp}
+        </div>
+
+        <div class="stat">
+            ❤️ ${state.lives}
+        </div>
+
+        <div class="stat">
+            🪙 ${state.coins}
+        </div>
+
+    `;
+
+    const homeXP =
+        document.getElementById("homeXP");
+
+    if(homeXP){
+
+        homeXP.textContent =
+            state.xp;
+
+        document.getElementById(
+            "homeStreak"
+        ).textContent =
+            state.streak;
+
+        document.getElementById(
+            "homeLives"
+        ).textContent =
+            state.lives;
+
+        document.getElementById(
+            "homeCoins"
+        ).textContent =
+            state.coins;
+
+        document.getElementById(
+            "homeLevel"
+        ).textContent =
+            "Nível "+level;
+
+        document.getElementById(
+            "levelName"
+        ).textContent =
+            NIVEL_NOMES[level-1];
+
+        document.getElementById(
+            "levelProgress"
+        ).style.width =
+            getLevelProgress()+"%";
+
+        document.getElementById(
+            "levelXPText"
+        ).textContent =
+            state.xp+" XP";
+
+        const journey =
+            getJourney(state.currentJourney);
+
+        if(journey){
+
+            const progress =
+                getJourneyProgress(
+                    journey.id
+                );
+
+            document.getElementById(
+                "homeProgressText"
+            ).textContent =
+                progress+
+                "/"+
+                journey.licoes.length+
+                " lições";
+
+            const percent =
+                Math.round(
+                    progress/
+                    journey.licoes.length*
+                    100
+                );
+
+            document.getElementById(
+                "homeProgressPercent"
+            ).textContent =
+                percent+"%";
+
+            document.getElementById(
+                "homeProgressBar"
+            ).style.width =
+                percent+"%";
+
+            const next =
+                journey.licoes.find(
+                    l=>
+                        !state.completedLessons.includes(
+                            l.id
+                        )
+                );
+
+            document.getElementById(
+                "homeLessonText"
+            ).textContent =
+                next
+                ?next.titulo
+                :"Jornada concluída! Continue pelo desafio.";
+
+        }
 
     }
 
 }
 
 
-/* ================= VOLTAR PARA JORNADA ================= */
+/* =========================================================
+   TOAST
+========================================================= */
 
-function voltarJornada(){
+let toastTimer;
 
-    perguntaRespondida = false;
+function toast(message){
 
-    document
-    .querySelectorAll(".answer")
-    .forEach(function(item){
+    const el =
+        document.getElementById("toast");
 
-        item.disabled = false;
-        item.classList.remove("correct");
-        item.classList.remove("wrong");
+    el.textContent =
+        message;
 
-    });
+    el.classList.add("show");
 
-    mostrarTela("jornada");
+    clearTimeout(toastTimer);
+
+    toastTimer =
+        setTimeout(
+            ()=>{
+                el.classList.remove("show");
+            },
+            2800
+        );
 
 }
+
+
+/* =========================================================
+   RECUPERAÇÃO DE VIDAS
+========================================================= */
+
+setInterval(()=>{
+
+    if(
+        state.lives<5 &&
+        state.lifeRecoveryAt
+    ){
+
+        if(
+            Date.now() >=
+            state.lifeRecoveryAt
+        ){
+
+            state.lives++;
+
+            if(state.lives<5){
+
+                state.lifeRecoveryAt =
+                    Date.now()+60000;
+
+            }else{
+
+                state.lifeRecoveryAt=null;
+
+            }
+
+            saveState();
+
+        }
+
+    }
+
+},1000);
+
+
+/* =========================================================
+   RESTAURAR JORNADAS CONCLUÍDAS
+========================================================= */
+
+function syncCompletedJourneys(){
+
+    jornadas.forEach(
+        journey=>{
+
+            const complete =
+                journey.licoes.every(
+                    lesson=>
+                        state.completedLessons.includes(
+                            lesson.id
+                        )
+                ) &&
+                state.completedChallenges.includes(
+                    journey.id
+                );
+
+            if(
+                complete &&
+                !state.completedJourneys.includes(
+                    journey.id
+                )
+            ){
+
+                state.completedJourneys.push(
+                    journey.id
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CORREÇÃO DE PROGRESSO
+========================================================= */
+
+function initializeProgress(){
+
+    syncCompletedJourneys();
+
+    if(
+        !jornadas.find(
+            j=>j.id===state.currentJourney
+        )
+    ){
+
+        state.currentJourney=1;
+
+    }
+
+    saveState();
+
+}
+
+
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
+
+initializeProgress();
+
+renderMap();
+
+renderAchievements();
+
+updateUI();
+
+
+/* =========================================================
+   EXPOR FUNÇÕES
+   PARA EVENTOS HTML
+========================================================= */
+
+window.startJourney = startJourney;
+window.selectLevel = selectLevel;
+window.goToObjective = goToObjective;
+window.selectObjective = selectObjective;
+window.finishOnboarding = finishOnboarding;
+
+window.continueJourney = continueJourney;
+
+window.openJourney = openJourney;
+window.openLesson = openLesson;
+
+window.answerQuestion = answerQuestion;
+window.nextQuestion = nextQuestion;
+
+window.backFromLesson = backFromLesson;
+
+window.openChallenge = openChallenge;
+window.answerChallenge = answerChallenge;
+window.nextChallenge = nextChallenge;
+
+window.recoverLife = recoverLife;
+
+window.showProfile = showProfile;
+window.showBible = showBible;
+
+window.showScreen = showScreen;
 
 </script>
 
 </body>
-
 </html>
