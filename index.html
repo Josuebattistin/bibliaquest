@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BíbliaQuest</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #07111f, #10253a);
+            color: white;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f3d477, #b88720);
+            color: #07111f;
+            font-size: 22px;
+        }
+
+        .login {
+            color: white;
+            text-decoration: none;
+        }
+
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            max-width: 650px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 9px 15px;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: #f3d477;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: clamp(45px, 7vw, 76px);
+            line-height: 1;
+            margin-bottom: 25px;
+        }
+
+        h1 span {
+            color: #f3d477;
+        }
+
+        .subtitle {
+            font-size: 19px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 35px;
+        }
+
+        .button {
+            border: none;
+            padding: 17px 28px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #f3d477, #c69a32);
+            color: #101820;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+        }
+
+        .stats {
+            display: flex;
+            gap: 35px;
+            margin-top: 50px;
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 24px;
+        }
+
+        .stat span {
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 48px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .stats {
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+
+            <div class="logo">
+                <div class="logo-icon">✦</div>
+                BíbliaQuest
+            </div>
+
+            <a href="#" class="login">Entrar</a>
+
+        </header>
+
+        <main class="hero">
+
+            <div class="hero-content">
+
+                <div class="badge">
+                    ✦ UMA NOVA FORMA DE APRENDER A BÍBLIA
+                </div>
+
+                <h1>
+                    Sua jornada pela
+                    <span>Bíblia começa aqui.</span>
+                </h1>
+
+                <p class="subtitle">
+                    Aprenda, descubra e memorize a Palavra através de
+                    jornadas interativas, desafios, conquistas e um tutor
+                    inteligente que acompanha sua evolução.
+                </p>
+
+                <button class="button" onclick="começar()">
+                    Começar minha jornada →
+                </button>
+
+                <div class="stats">
+
+                    <div class="stat">
+                        <strong>📖</strong>
+                        <span>Jornadas bíblicas</span>
+                    </div>
+
+                    <div class="stat">
+                        <strong>🎮</strong>
+                        <span>Aprendizado gamificado</span>
+                    </div>
+
+                    <div class="stat">
+                        <strong>🤖</strong>
+                        <span>Tutor inteligente</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <script>
+
+        function começar() {
+            alert("🚀 Sua jornada pelo BíbliaQuest vai começar!");
+        }
+
+    </script>
+
+</body>
+</html>
