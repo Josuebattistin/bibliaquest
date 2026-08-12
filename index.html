@@ -385,16 +385,18 @@
 
     }
 
-    function continuar() {
+  function continuar() {
 
-        alert(
-            "🎯 Perfeito! Agora vamos criar sua jornada personalizada."
-        );
+    const nivelSelecionado = document.querySelector(".level-card.selected");
 
+    if (!nivelSelecionado) {
+        return;
     }
 
-</script>
+    document.getElementById("nivel")
+        .classList.remove("active");
 
-</body>
+    document.getElementById("objetivo")
+        .classList.add("active");
 
-</html>
+}
