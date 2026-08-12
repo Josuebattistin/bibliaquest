@@ -498,12 +498,9 @@
 <script>
 
     function mostrarNivel() {
-
-        document.getElementById("home").classList.remove("active");
-
-        document.getElementById("nivel").classList.add("active");
-
-    }
+    document.getElementById("home").style.display = "none";
+    document.getElementById("nivel").style.display = "flex";
+}
 
 
     function voltarInicio() {
