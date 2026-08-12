@@ -8,6 +8,7 @@
     <title>BíbliaQuest</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -17,9 +18,20 @@
         body {
             font-family: Arial, sans-serif;
             min-height: 100vh;
+
             background:
-                radial-gradient(circle at 80% 20%, rgba(212,175,55,0.12), transparent 30%),
-                linear-gradient(135deg, #07111f, #0d1b2a, #10253a);
+                radial-gradient(
+                    circle at 80% 20%,
+                    rgba(212,175,55,0.12),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #07111f,
+                    #0d1b2a,
+                    #10253a
+                );
+
             color: white;
         }
 
@@ -48,10 +60,18 @@
             width: 42px;
             height: 42px;
             border-radius: 12px;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #f3d477, #b88720);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f3d477,
+                    #b88720
+                );
+
             color: #07111f;
             font-size: 22px;
         }
@@ -64,7 +84,9 @@
 
         .screen {
             min-height: 85vh;
+
             display: none;
+
             align-items: center;
             justify-content: center;
         }
@@ -81,18 +103,27 @@
 
         .badge {
             display: inline-block;
+
             padding: 9px 15px;
+
             border-radius: 30px;
+
             background: rgba(255,255,255,0.06);
+
             border: 1px solid rgba(255,255,255,0.12);
+
             color: #f3d477;
+
             font-size: 13px;
+
             margin-bottom: 25px;
         }
 
         h1 {
             font-size: clamp(45px, 7vw, 72px);
+
             line-height: 1;
+
             margin-bottom: 25px;
         }
 
@@ -102,26 +133,45 @@
 
         .subtitle {
             font-size: 18px;
+
             line-height: 1.7;
+
             color: rgba(255,255,255,0.68);
+
             margin-bottom: 35px;
         }
 
         .button {
             border: none;
+
             padding: 17px 30px;
+
             border-radius: 14px;
-            background: linear-gradient(135deg, #f3d477, #c69a32);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f3d477,
+                    #c69a32
+                );
+
             color: #101820;
+
             font-size: 16px;
+
             font-weight: bold;
+
             cursor: pointer;
+
             transition: 0.2s;
         }
 
         .button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(212,175,55,0.25);
+
+            box-shadow:
+                0 12px 30px
+                rgba(212,175,55,0.25);
         }
 
         .level-container {
@@ -131,73 +181,110 @@
 
         .back {
             background: none;
+
             border: none;
+
             color: rgba(255,255,255,0.6);
+
             cursor: pointer;
+
             margin-bottom: 35px;
+
             font-size: 14px;
         }
 
         .level-title {
             font-size: 42px;
+
             margin-bottom: 12px;
         }
 
         .level-description {
             color: rgba(255,255,255,0.6);
+
             font-size: 17px;
+
             margin-bottom: 35px;
+
             line-height: 1.6;
         }
 
         .levels {
             display: grid;
+
             gap: 14px;
         }
 
         .level-card {
             width: 100%;
+
             padding: 22px;
+
             border-radius: 18px;
+
             background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.1);
+
             color: white;
+
             text-align: left;
+
             cursor: pointer;
+
             transition: 0.2s;
         }
 
         .level-card:hover {
             transform: translateY(-2px);
-            background: rgba(255,255,255,0.08);
+
+            background:
+                rgba(255,255,255,0.08);
         }
 
         .level-card.selected {
-            border: 2px solid #f3d477;
-            background: rgba(243,212,119,0.08);
-            box-shadow: 0 0 30px rgba(243,212,119,0.08);
+            border:
+                2px solid
+                #f3d477;
+
+            background:
+                rgba(243,212,119,0.08);
+
+            box-shadow:
+                0 0 30px
+                rgba(243,212,119,0.08);
         }
 
         .level-icon {
             font-size: 30px;
+
             margin-bottom: 10px;
         }
 
         .level-name {
             font-size: 18px;
+
             font-weight: bold;
+
             margin-bottom: 6px;
         }
 
         .level-text {
-            color: rgba(255,255,255,0.55);
+            color:
+                rgba(255,255,255,0.55);
+
             font-size: 14px;
+
             line-height: 1.5;
         }
 
         .continue {
             width: 100%;
+
             margin-top: 25px;
+
             opacity: 0.45;
         }
 
@@ -206,6 +293,7 @@
         }
 
         @media (max-width: 600px) {
+
             .level-title {
                 font-size: 32px;
             }
@@ -217,8 +305,11 @@
             .level-card {
                 padding: 18px;
             }
+
         }
+
     </style>
+
 </head>
 
 <body>
@@ -228,17 +319,28 @@
     <header>
 
         <div class="logo">
-            <div class="logo-icon">✦</div>
+
+            <div class="logo-icon">
+                ✦
+            </div>
+
             BíbliaQuest
+
         </div>
 
-        <a href="#" class="login">Entrar</a>
+        <a href="#" class="login">
+            Entrar
+        </a>
 
     </header>
 
+
     <!-- TELA INICIAL -->
 
-    <section id="home" class="screen active">
+    <section
+        id="home"
+        class="screen active"
+    >
 
         <div class="hero">
 
@@ -247,49 +349,79 @@
             </div>
 
             <h1>
+
                 Sua jornada pela
-                <span>Bíblia começa aqui.</span>
+
+                <span>
+                    Bíblia começa aqui.
+                </span>
+
             </h1>
 
             <p class="subtitle">
+
                 Aprenda, descubra e memorize a Palavra
                 através de jornadas interativas,
                 desafios, conquistas e um tutor
                 inteligente que acompanha sua evolução.
+
             </p>
 
-            <button class="button" onclick="mostrarNivel()">
+            <button
+                class="button"
+                onclick="mostrarNivel()"
+            >
+
                 Começar minha jornada →
+
             </button>
 
         </div>
 
     </section>
 
+
     <!-- TELA DE NÍVEL -->
 
-    <section id="nivel" class="screen">
+    <section
+        id="nivel"
+        class="screen"
+    >
 
         <div class="level-container">
 
-            <button class="back" onclick="voltarInicio()">
+            <button
+                class="back"
+                onclick="voltarInicio()"
+            >
+
                 ← Voltar
+
             </button>
 
             <h2 class="level-title">
+
                 Antes de começar...
+
             </h2>
 
             <p class="level-description">
+
                 Queremos adaptar sua jornada ao seu
                 conhecimento atual da Bíblia.
+
             </p>
 
             <div class="levels">
 
-                <button class="level-card" onclick="selecionarNivel(this)">
+                <button
+                    class="level-card"
+                    onclick="selecionarNivel(this)"
+                >
 
-                    <div class="level-icon">🌱</div>
+                    <div class="level-icon">
+                        🌱
+                    </div>
 
                     <div class="level-name">
                         Estou começando
@@ -301,9 +433,15 @@
 
                 </button>
 
-                <button class="level-card" onclick="selecionarNivel(this)">
 
-                    <div class="level-icon">📖</div>
+                <button
+                    class="level-card"
+                    onclick="selecionarNivel(this)"
+                >
+
+                    <div class="level-icon">
+                        📖
+                    </div>
 
                     <div class="level-name">
                         Já conheço algumas coisas
@@ -316,9 +454,15 @@
 
                 </button>
 
-                <button class="level-card" onclick="selecionarNivel(this)">
 
-                    <div class="level-icon">🔥</div>
+                <button
+                    class="level-card"
+                    onclick="selecionarNivel(this)"
+                >
+
+                    <div class="level-icon">
+                        🔥
+                    </div>
 
                     <div class="level-name">
                         Conheço bastante
@@ -333,12 +477,150 @@
 
             </div>
 
+
             <button
                 id="continueButton"
                 class="button continue"
                 onclick="continuar()"
             >
+
                 Continuar →
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- TELA DE OBJETIVO -->
+
+    <section
+        id="objetivo"
+        class="screen"
+    >
+
+        <div class="level-container">
+
+            <button
+                class="back"
+                onclick="voltarNivel()"
+            >
+
+                ← Voltar
+
+            </button>
+
+            <h2 class="level-title">
+
+                Qual é o seu objetivo?
+
+            </h2>
+
+            <p class="level-description">
+
+                Escolha o que você mais deseja alcançar
+                durante sua jornada no BíbliaQuest.
+
+            </p>
+
+            <div class="levels">
+
+
+                <button
+                    class="level-card objetivo-card"
+                    onclick="selecionarObjetivo(this)"
+                >
+
+                    <div class="level-icon">
+                        📖
+                    </div>
+
+                    <div class="level-name">
+                        Conhecer melhor a Bíblia
+                    </div>
+
+                    <div class="level-text">
+                        Quero entender as histórias,
+                        personagens e ensinamentos das Escrituras.
+                    </div>
+
+                </button>
+
+
+                <button
+                    class="level-card objetivo-card"
+                    onclick="selecionarObjetivo(this)"
+                >
+
+                    <div class="level-icon">
+                        🧠
+                    </div>
+
+                    <div class="level-name">
+                        Memorizar versículos
+                    </div>
+
+                    <div class="level-text">
+                        Quero guardar a Palavra de Deus
+                        no meu coração.
+                    </div>
+
+                </button>
+
+
+                <button
+                    class="level-card objetivo-card"
+                    onclick="selecionarObjetivo(this)"
+                >
+
+                    <div class="level-icon">
+                        🔥
+                    </div>
+
+                    <div class="level-name">
+                        Fortalecer minha fé
+                    </div>
+
+                    <div class="level-text">
+                        Quero desenvolver uma vida
+                        espiritual mais próxima de Deus.
+                    </div>
+
+                </button>
+
+
+                <button
+                    class="level-card objetivo-card"
+                    onclick="selecionarObjetivo(this)"
+                >
+
+                    <div class="level-icon">
+                        🏆
+                    </div>
+
+                    <div class="level-name">
+                        Testar meus conhecimentos
+                    </div>
+
+                    <div class="level-text">
+                        Quero responder desafios
+                        e provar o quanto conheço a Bíblia.
+                    </div>
+
+                </button>
+
+            </div>
+
+
+            <button
+                id="objectiveContinue"
+                class="button continue"
+                onclick="continuarObjetivo()"
+            >
+
+                Continuar →
+
             </button>
 
         </div>
@@ -347,31 +629,40 @@
 
 </div>
 
+
 <script>
+
 
     function mostrarNivel() {
 
-        document.getElementById("home")
+        document
+            .getElementById("home")
             .classList.remove("active");
 
-        document.getElementById("nivel")
+        document
+            .getElementById("nivel")
             .classList.add("active");
 
     }
+
 
     function voltarInicio() {
 
-        document.getElementById("nivel")
+        document
+            .getElementById("nivel")
             .classList.remove("active");
 
-        document.getElementById("home")
+        document
+            .getElementById("home")
             .classList.add("active");
 
     }
 
+
     function selecionarNivel(card) {
 
-        document.querySelectorAll(".level-card")
+        document
+            .querySelectorAll(".level-card")
             .forEach(function(item) {
 
                 item.classList.remove("selected");
@@ -380,23 +671,91 @@
 
         card.classList.add("selected");
 
-        document.getElementById("continueButton")
+        document
+            .getElementById("continueButton")
             .classList.add("ready");
 
     }
 
-  function continuar() {
 
-    const nivelSelecionado = document.querySelector(".level-card.selected");
+    function continuar() {
 
-    if (!nivelSelecionado) {
-        return;
+        const nivelSelecionado =
+            document.querySelector(
+                "#nivel .level-card.selected"
+            );
+
+        if (!nivelSelecionado) {
+
+            return;
+
+        }
+
+        document
+            .getElementById("nivel")
+            .classList.remove("active");
+
+        document
+            .getElementById("objetivo")
+            .classList.add("active");
+
     }
 
-    document.getElementById("nivel")
-        .classList.remove("active");
 
-    document.getElementById("objetivo")
-        .classList.add("active");
+    function voltarNivel() {
 
-}
+        document
+            .getElementById("objetivo")
+            .classList.remove("active");
+
+        document
+            .getElementById("nivel")
+            .classList.add("active");
+
+    }
+
+
+    function selecionarObjetivo(card) {
+
+        document
+            .querySelectorAll(".objetivo-card")
+            .forEach(function(item) {
+
+                item.classList.remove("selected");
+
+            });
+
+        card.classList.add("selected");
+
+        document
+            .getElementById("objectiveContinue")
+            .classList.add("ready");
+
+    }
+
+
+    function continuarObjetivo() {
+
+        const objetivoSelecionado =
+            document.querySelector(
+                ".objetivo-card.selected"
+            );
+
+        if (!objetivoSelecionado) {
+
+            return;
+
+        }
+
+        alert(
+            "🔥 Excelente! Agora vamos preparar sua jornada no BíbliaQuest."
+        );
+
+    }
+
+
+</script>
+
+</body>
+
+</html>
